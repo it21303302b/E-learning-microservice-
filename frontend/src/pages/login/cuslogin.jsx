@@ -15,42 +15,46 @@ export default function Cuslogin() {
 
     const User = {
       username: email,
-      password
+      password,
     }
 
-    const response = await axios.post(`http://localhost:5000/api/auth/login`, User);
-    const content = response.data;
-    const user = content.user;
-    const authToken = content.token;
-    console.log("this is content",content);
-    console.log("this is User",user);
+    try {
+      const response = await axios.post(`http://localhost:8070/api/auth/login`, User)
+      const content = response.data
+      const user = content.user
+      const authToken = content.token
 
-    if (content.message === 'Logged in successfully.') {
+      if (content.message === 'Logged in successfully.') {
+        localStorage.setItem('session', 'yes')
+        localStorage.setItem('buyerID', user._id)
+        localStorage.setItem('buyerUsername', user.username)
+        localStorage.setItem('buyerPassword', user.password)
+        localStorage.setItem('authToken', authToken)
+        localStorage.setItem('user', 'buyer')
 
-      localStorage.setItem('session', 'yes')
-      localStorage.setItem('buyerID', user._id)
-      localStorage.setItem('buyerUsername', user.username)
-      localStorage.setItem('buyerPassword', user.password)
-      localStorage.setItem('authToken', authToken)
-      localStorage.setItem('user', 'buyer')
-      console.log(localStorage.getItem('session'))
-      console.log(localStorage.getItem('user'))
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Successful...',
-        text: 'Login Successful as a Customer!',
-        footer: '<a href="/cusdash">Go to Dashboard</a>',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = '/cusdash'
-        }
-      })
-    } else {
+        Swal.fire({
+          icon: 'success',
+          title: 'Successful...',
+          text: 'Login Successful as a Customer!',
+          footer: '<a href="/cusdash">Go to Dashboard</a>',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = '/cusdash' // Redirect to the dashboard page
+          }
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Check Your Email & Password Again!!!',
+        })
+      }
+    } catch (error) {
+      console.error('Login Error:', error)
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Check Your Email & Passoword Again!!!',
+        text: 'Something went wrong. Please try again later!',
       })
     }
   }
@@ -70,7 +74,7 @@ export default function Cuslogin() {
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 card">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Sign in to your account</h1>
-                <form className="space-y-4 md:space-y-6" onSubmit={cusLogin} autocomplete="off">
+                <form className="space-y-4 md:space-y-6" onSubmit={cusLogin} autoComplete="off">
                   <div>
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Your email

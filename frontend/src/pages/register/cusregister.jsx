@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 export default function CusRegister() {
-
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [fname, setFname] = useState('')
   const [lname, setLname] = useState('')
   const [address, setAddress] = useState('')
@@ -32,31 +31,32 @@ export default function CusRegister() {
   }
 
   const handleSubmit = async (e) => {
-
-    e.preventDefault();
+    e.preventDefault()
 
     const user = {
       username: fname,
       password,
-      role: 'buyer' 
+      role: 'buyer',
     }
 
-    try{
-      console.log(user);
-      axios.post("http://localhost:5000/api/auth/register", user).then(() => {
-        console.log('User Registered Successfully');
-        navigate('/login/cuslogin');
-      }).catch((err) => {
-        console.log(err)
-      })
+    try {
+      console.log(user)
+      axios
+        .post('http://localhost:8070/api/auth/register', user)
+        .then(() => {
+          console.log('User Registered Successfully')
+          navigate('/login/cuslogin')
+        })
+        .catch((err) => {
+          console.log(err)
+        })
 
       // if (content.success === true) {
       //   window.location.href = '/login/cuslogin'
       // }
-    } catch(error){
-      console.log(error);
+    } catch (error) {
+      console.log(error)
     }
-
   }
 
   return (
@@ -78,11 +78,7 @@ export default function CusRegister() {
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-l xl:p-0 dark:bg-gray-800 dark:border-gray-700 cusregform">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Create and account</h1>
-              <form
-                className="space-y-4 md:space-y-6"
-                autocomplete="off"
-                onSubmit={handleSubmit}
-              >
+              <form className="space-y-4 md:space-y-6" autocomplete="off" onSubmit={handleSubmit}>
                 {/* name  */}
                 <div className="grid gap-6 mb-6 md:grid-cols-2">
                   <div>

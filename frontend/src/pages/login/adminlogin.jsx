@@ -1,28 +1,28 @@
 // import { async } from "@firebase/util";
 import React from 'react'
 import Swal from 'sweetalert2'
-import axios from 'axios';
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 export default function Adminlogin() {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
-  const [role , setRole] = React.useState('admin');
+  const [role, setRole] = React.useState('admin')
 
   async function adminLogin(event) {
     event.preventDefault()
 
     const User = {
       username: email,
-      password
+      password,
     }
 
-    const response = await axios.post(`http://localhost:5000/api/auth/login`, User);
-    const content = response.data;
-    const user = content.user;
-    const authToken = content.token;
-    console.log("this is content",content);
-    console.log("this is User",user);
+    const response = await axios.post(`http://localhost:8070/api/auth/login`, User)
+    const content = response.data
+    const user = content.user
+    const authToken = content.token
+    console.log('this is content', content)
+    console.log('this is User', user)
 
     if (content.message === 'Logged in successfully.') {
       localStorage.setItem('session', 'yes')

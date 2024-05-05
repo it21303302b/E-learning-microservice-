@@ -1,5 +1,6 @@
-import React from "react";
-import OrdersAdminPage from "../components/drop";
+import React from 'react'
+import OrdersAdminPage from '../components/drop'
+import { Link } from 'react-router-dom'
 
 function AdminDashboard() {
   return (
@@ -15,7 +16,7 @@ function AdminDashboard() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default AdminDashboard;
+export default AdminDashboard

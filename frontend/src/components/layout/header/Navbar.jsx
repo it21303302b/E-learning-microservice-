@@ -3,10 +3,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-
-
-const Navbar = ( ) => {
-
+const Navbar = () => {
   const dispatch = useDispatch()
   const cartItems = useSelector((state) => state.cart.items)
 
@@ -62,6 +59,14 @@ const Navbar = ( ) => {
             </ul>
           </div>
 
+          <Link to={'/login'}>
+            <button>login</button>
+          </Link>
+
+          <Link to={'/register'}>
+            <button>signup</button>
+          </Link>
+
           <div className="search-box f_flex">
             <i className="fa fa-search"></i>
             <input type="text" placeholder="Search and hit enter..." />
@@ -104,7 +109,7 @@ const Navbar = ( ) => {
                 </a>
               </li>
               <li>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                <a href="" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                   Sign out
                 </a>
               </li>
