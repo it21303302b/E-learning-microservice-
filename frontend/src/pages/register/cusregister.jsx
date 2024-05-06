@@ -36,7 +36,7 @@ export default function CusRegister() {
     const user = {
       username: fname,
       password,
-      role: 'buyer',
+      role: 'learner',
     }
 
     try {

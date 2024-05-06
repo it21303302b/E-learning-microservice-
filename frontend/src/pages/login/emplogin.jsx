@@ -24,7 +24,7 @@ export default function EmpLogin() {
     console.log('this is content', content)
     console.log('this is User', user)
 
-    if (content.message === 'Logged in successfully.') {
+    if (content.message === 'Logged in successfully.' && user.role === 'instructor') {
       localStorage.setItem('session', 'yes')
       localStorage.setItem('sellerID', user._id)
       localStorage.setItem('sellerUsername', user.username)
