@@ -1,14 +1,11 @@
 import React from 'react'
-import jwt_decode from 'jwt-decode'
+import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import axios from 'axios'
-import { v4 } from 'uuid'
-import { Link } from 'react-router-dom'
 
 export default function Cuslogin() {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
-  const [role, setRole] = React.useState('buyer')
 
   async function cusLogin(event) {
     event.preventDefault()
@@ -22,31 +19,25 @@ export default function Cuslogin() {
       const response = await axios.post(`http://localhost:8070/api/auth/login`, User)
       const content = response.data
       const user = content.user
-      const authToken = content.token
 
-      if (content.message === 'Logged in successfully.') {
-        localStorage.setItem('session', 'yes')
-        localStorage.setItem('buyerID', user._id)
-        localStorage.setItem('buyerUsername', user.username)
-        localStorage.setItem('buyerPassword', user.password)
-        localStorage.setItem('authToken', authToken)
-        localStorage.setItem('user', 'buyer')
-
+      if (content.message === 'Logged in successfully.' && user.role === 'learner') {
+        // Redirect to learner dashboard if the user is a learner
         Swal.fire({
           icon: 'success',
           title: 'Successful...',
-          text: 'Login Successful as a Customer!',
+          text: 'Login Successful as a Learner!',
           footer: '<a href="/cusdash">Go to Dashboard</a>',
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = '/cusdash' // Redirect to the dashboard page
+            window.location.href = '/cusdash' // Redirect to the learner dashboard page
           }
         })
       } else {
+        // Display error message if the user is not a learner
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Check Your Email & Password Again!!!',
+          text: 'Only learners are allowed to login here!',
         })
       }
     } catch (error) {

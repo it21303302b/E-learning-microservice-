@@ -27,7 +27,7 @@ export default function EmpRegister() {
     const user = {
       username: fname,
       password,
-      role: 'seller',
+      role: 'instructor',
     }
 
     try {
