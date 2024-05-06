@@ -2,10 +2,7 @@
 
 ## Group Memebers
 
-* IT21064418 - Kariyawasam S B
-* IT21050794 - Dasanayake L R S
-* IT21052392 - O D Thawalampola
-* IT21084522 - Dissanayake A L
+* 
 
 ## Technologies Used
 
