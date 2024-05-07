@@ -32,32 +32,31 @@ export default function CusRegister() {
       return
     }
 
-    // Set default role value
     const userData = {
       firstName,
       lastName,
       email,
       mobileNumber,
       password,
-      role: 'learner', // Default role set here
+      role: 'learner',
     }
 
     console.log(userData)
 
     try {
-      // Register user
+      // Register learner
       axios
         .post('http://localhost:8070/api/auth/register', userData)
         .then(() => {
           console.log('User Registered Successfully')
-          // Display success message
+
           Swal.fire({
             icon: 'success',
             title: 'Success!',
             text: 'User registered successfully.',
           })
 
-          // Redirect to login page
+          // to login page
           navigate('/login/cuslogin')
         })
         .catch((err) => {
