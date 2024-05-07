@@ -1,57 +1,63 @@
 import { useEffect, useState } from "react";
 import "./ItemDetails.css";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem } from '../../store/cartSlice';
 import axios from "axios";
 
 const ItemDetails = () => {
-  const [Items, setItems] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios
-      .get("http://localhost:4001/api/itemmanagement")
+      .get("http://localhost:4001/api/courses")
       .then((res) => {
         console.log(res.data);
-        setItems(res.data);
+        setCourses(res.data);
       })
       .catch((err) => {
         alert(err.message);
       });
   }, []);
 
+  const handleAddToCart = (course) => {
+    dispatch(addItem(course));
+  };
+
+  const isAddedToCart = (course) => {
+    return cartItems.some((item) => item._id === course._id);
+  };
+
   return (
-    <div>
-      {Items.map((item, index) => (
-        <div className="product_style" key={index}>
-          <b>
-            <h1>Product Name: {item.product_name}</h1>
-          </b>
-          <br />
-          <p>Product Description: {item.product_description}</p>
-          <br />
-          <p>Product Features: {item.product_features}</p>
-          <br />
-          <p>Product Price: {item.product_price}</p>
-          <br />
-          <p>Shipping Details: {item.shipping_information}</p>
-          <br />
-          <p>Return Policy: {item.return_policy}</p>
-          <br />
-          <p>
-            Ratings:
-            {item.reviews &&
-              item.reviews.map((review, index) => (
-                <span key={index}>
-                  <br/>{review.review_title}<br/>{review.rating}<br/>{review.Description}<br/>
-                </span>
-              ))}
-          </p>
-          <br />
-          <p>Warranty Information: {item.Warranty_Information}</p>
-          <Link to={`../addreview/${item._id}`}>
-            <button>Add Review</button>
-          </Link>
-        </div>
-      ))}
+    <div className="container">
+      <div className="card-container">
+        {courses.map((course, index) => (
+          <div className="card" key={index}>
+            <div className="card-content">
+              <h2 className="course-name">{course.course_name}</h2>
+              <p className="course-description">{course.course_description}</p>
+              <p className="course-price">${course.course_price}</p>
+              <p className="enrollment-details">{course.enrollment_details}</p>
+              {!isAddedToCart(course) ? (
+                <button 
+                  className="add-to-cart-btn" 
+                  onClick={() => handleAddToCart(course)}
+                >
+                  Add to Cart
+                </button>
+              ) : (
+                <button 
+                  className="add-to-cart-btn added-to-cart" 
+                  disabled
+                >
+                  Added to Cart
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
