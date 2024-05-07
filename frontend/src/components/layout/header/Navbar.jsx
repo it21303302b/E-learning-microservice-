@@ -2,14 +2,14 @@ import React from 'react'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom' // Import Link component from react-router-dom
+import { Link } from 'react-router-dom'
 
 const navigation = [
-  { name: 'Home', to: '#', current: true }, // Use 'to' instead of 'href'
-  { name: 'Courses', to: '#', current: false }, // Use 'to' instead of 'href'
-  { name: 'Cart', to: '#', current: false }, // Use 'to' instead of 'href'
-  { name: 'Login', to: '/login', current: false }, // Use 'to' instead of 'href'
-  { name: 'Register', to: '/register', current: false }, // Use 'to' instead of 'href'
+  { name: 'Home', to: '#', current: true },
+  { name: 'Courses', to: '#', current: false },
+  { name: 'Cart', to: '#', current: false },
+  { name: 'Login', to: '/login', current: false },
+  { name: 'Register', to: '/register', current: false },
 ]
 
 function classNames(...classes) {
