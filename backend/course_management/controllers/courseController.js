@@ -1,4 +1,5 @@
 const Course = require('../models/courseModel');
+const User = require('../../auth-service/models/User');
 const mongoose = require('mongoose');
 
 // Get single course
@@ -34,26 +35,32 @@ const getAllCourses = async (req, res) => {
 const createCourse = async (req, res) => {
     const { course_name, course_description, course_content, course_price, enrollment_details } = req.body;
 
-    // Check if user is an instructor
-    if (req.user && req.user.role === 'instructor') {
-        try {
-            // Add instructor ID to the course object
-            const course = await Course.create({ 
-                course_name, 
-                course_description, 
-                course_content, 
-                course_price, 
-                enrollment_details, 
-                instructor: req.user._id 
-            });
-            res.status(201).json(course);
-        } catch (error) {
-            res.status(400).json({ error: error.message });
+    try {
+        // Check if assigned user is an instructor
+        const instructorExists = await User.exists({
+            _id: req.user._id, // Assuming req.user contains the authenticated user's information
+            role: 'instructor',
+        });
+
+        if (!instructorExists) {
+            return res.status(403).json({ error: 'Only instructors can add courses' });
         }
-    } else {
-        res.status(403).json({ error: 'Only instructors can add courses' });
+
+        // Add instructor ID to the course object
+        const course = await Course.create({ 
+            course_name, 
+            course_description, 
+            course_content, 
+            course_price, 
+            enrollment_details, 
+            instructor: req.user._id 
+        });
+        res.status(201).json(course);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 };
+
 
 // Delete course
 const deleteCourse = async (req, res) => {
@@ -96,7 +103,7 @@ const updateCourse = async (req, res) => {
 module.exports = {
     getAllCourses,
     getCourse,
-    createCourse, // No need for middleware here, authentication is handled inside the function
+    createCourse, 
     deleteCourse,
     updateCourse
 };
