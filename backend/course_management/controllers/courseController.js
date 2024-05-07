@@ -1,5 +1,4 @@
 const Course = require('../models/courseModel');
-const User = require('../../auth-service/models/User');
 const mongoose = require('mongoose');
 
 // Get single course
@@ -33,27 +32,14 @@ const getAllCourses = async (req, res) => {
 
 // Create new course
 const createCourse = async (req, res) => {
-    const { course_name, course_description, course_content, course_price, enrollment_details } = req.body;
+    const { course_name, course_description, course_content, course_price } = req.body;
 
     try {
-        // Check if assigned user is an instructor
-        const instructorExists = await User.exists({
-            _id: req.user._id, // Assuming req.user contains the authenticated user's information
-            role: 'instructor',
-        });
-
-        if (!instructorExists) {
-            return res.status(403).json({ error: 'Only instructors can add courses' });
-        }
-
-        // Add instructor ID to the course object
         const course = await Course.create({ 
             course_name, 
             course_description, 
             course_content, 
-            course_price, 
-            enrollment_details, 
-            instructor: req.user._id 
+            course_price
         });
         res.status(201).json(course);
     } catch (error) {

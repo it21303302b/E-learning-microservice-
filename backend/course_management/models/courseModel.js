@@ -20,15 +20,6 @@ const courseSchema = new Schema({
     course_price: {
         type: Number,
         required: true
-    },
-    enrollment_details: {
-        type: String,
-        required: true
-    },
-    instructor: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
     }
 }, { timestamps: true });
 

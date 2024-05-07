@@ -7,11 +7,16 @@ import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const navigation = [
-  { name: 'Home', to: '#', current: true },
-  { name: 'Courses', to: '#', current: false },
-  { name: 'Cart', to: '#', current: false },
+
+
+
+  { name: 'Home', to: '/', current: true },
+  { name: 'Courses', to: '/displayitems', current: false },
+  { name: 'Cart', to: '/cart', current: false },  
   // { name: 'Login', to: '/login', current: false },
   // { name: 'Register', to: '/register', current: false },
+  
+
 ]
 
 function classNames(...classes) {
