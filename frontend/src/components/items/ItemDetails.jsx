@@ -19,23 +19,22 @@ const ItemDetails = () => {
   }, []);
 
   return (
-    <div>
-      {courses.map((course, index) => (
-        <div className="course_style" key={index}>
-          <b>
-            <h1>Course Name: {course.course_name}</h1>
-          </b>
-          <br />
-          <p>Course Description: {course.course_description}</p>
-          <br />
-          <p>Course Price: {course.course_price}</p>
-          <br />
-          <p>Enrollment Details: {course.enrollment_details}</p>
-          <Link to={`../addreview/${course._id}`}>
-            <button>Add Review</button>
-          </Link>
-        </div>
-      ))}
+    <div className="container">
+      <div className="card-container">
+        {courses.map((course, index) => (
+          <div className="card" key={index}>
+            <div className="card-content">
+              <h2 className="course-name">{course.course_name}</h2>
+              <p className="course-description">{course.course_description}</p>
+              <p className="course-price">${course.course_price}</p>
+              <p className="enrollment-details">{course.enrollment_details}</p>
+              <Link to={`../addreview/${course._id}`}>
+                <button className="add-review-btn">Add Review</button>
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

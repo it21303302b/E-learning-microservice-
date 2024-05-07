@@ -17,3 +17,65 @@
     line-height: 1.5;
     margin-bottom: 5px;
     }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+      }
+      
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      
+      .card {
+        width: calc(33.33% - 20px);
+        margin: 10px;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      
+      .card-content {
+        padding: 20px;
+      }
+      
+      .course-name {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      
+      .course-description {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      
+      .course-price {
+        font-size: 18px;
+        font-weight: bold;
+      }
+      
+      .enrollment-details {
+        font-size: 16px;
+        margin-top: 10px;
+      }
+      
+      .add-review-btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      .add-review-btn:hover {
+        background-color: #0056b3;
+      }
+      
