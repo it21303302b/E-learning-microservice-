@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import "./ItemDetails.css";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem } from '../../store/cartSlice';
 import axios from "axios";
 
 const ItemDetails = () => {
   const [courses, setCourses] = useState([]);
+  const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios
@@ -18,6 +21,14 @@ const ItemDetails = () => {
       });
   }, []);
 
+  const handleAddToCart = (course) => {
+    dispatch(addItem(course));
+  };
+
+  const isAddedToCart = (course) => {
+    return cartItems.some((item) => item._id === course._id);
+  };
+
   return (
     <div className="container">
       <div className="card-container">
@@ -28,9 +39,21 @@ const ItemDetails = () => {
               <p className="course-description">{course.course_description}</p>
               <p className="course-price">${course.course_price}</p>
               <p className="enrollment-details">{course.enrollment_details}</p>
-              <Link to={`../addreview/${course._id}`}>
-                <button className="add-review-btn">Add Review</button>
-              </Link>
+              {!isAddedToCart(course) ? (
+                <button 
+                  className="add-to-cart-btn" 
+                  onClick={() => handleAddToCart(course)}
+                >
+                  Add to Cart
+                </button>
+              ) : (
+                <button 
+                  className="add-to-cart-btn added-to-cart" 
+                  disabled
+                >
+                  Added to Cart
+                </button>
+              )}
             </div>
           </div>
         ))}

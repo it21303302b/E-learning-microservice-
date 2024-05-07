@@ -64,7 +64,7 @@
         margin-top: 10px;
       }
       
-      .add-review-btn {
+      .add-to-cart-btn {
         background-color: #007bff;
         color: #fff;
         border: none;
@@ -75,7 +75,7 @@
         transition: background-color 0.3s ease;
       }
       
-      .add-review-btn:hover {
+      .add-to-cart-btn:hover {
         background-color: #0056b3;
       }
       

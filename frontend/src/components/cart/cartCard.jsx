@@ -77,7 +77,7 @@ const CartCard = () => {
             <p className="text-gray-700">LKR {subtotal}</p>
           </div>
           <div className="flex justify-between">
-            <p className="text-gray-700">Shipping</p>
+            <p className="text-gray-700">Savings</p>
             <p className="text-gray-700">LKR {shipping}</p>
           </div>
           <hr className="my-4" />

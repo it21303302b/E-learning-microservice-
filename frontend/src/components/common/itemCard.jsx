@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../store/cartSlice';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -7,6 +7,7 @@ import Button from './button';
 
 const ItemCard = (props) => {
   const [courses, setCourses] = useState([]);
+  const cartItems = useSelector((state) => state.cart.items);
   
   useEffect(() => {
     function getCourses() {
@@ -27,8 +28,11 @@ const ItemCard = (props) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = (course) => {
-    // Modify this logic as per your requirement to add the selected course to the cart
     dispatch(addItem(course));
+  };
+
+  const isAddedToCart = (course) => {
+    return cartItems.some((item) => item._id === course._id);
   };
 
   return (
@@ -62,24 +66,33 @@ const ItemCard = (props) => {
                   </span>
                 </p>
               </div>
-              <Button
-                onClick={() => {
-                  handleAddToCart(course);
-                }}
-                className="flex items-center justify-center rounded-md px-5 py-2.5 text-center text-sm font-medium  focus:outline-none focus:ring-4 focus:ring-green-300"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="mr-2 h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
+              {!isAddedToCart(course) ? (
+                <Button
+                  onClick={() => {
+                    handleAddToCart(course);
+                  }}
+                  className="flex items-center justify-center rounded-md px-5 py-2.5 text-center text-sm font-medium  focus:outline-none focus:ring-4 focus:ring-green-300"
                 >
-                  {/* Add to cart icon */}
-                </svg>
-                Add to cart
-              </Button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="mr-2 h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    {/* Add to cart icon */}
+                  </svg>
+                  Add to cart
+                </Button>
+              ) : (
+                <Button
+                  className="flex items-center justify-center rounded-md px-5 py-2.5 text-center text-sm font-medium  focus:outline-none focus:ring-4 focus:ring-green-300 added-to-cart"
+                  disabled
+                >
+                  Added to cart
+                </Button>
+              )}
             </div>
           </div>
         </div>
