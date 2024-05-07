@@ -1,5 +1,5 @@
 const amqp = require('amqplib');
-const { addReview } = require('../controllers/itemscontroller');
+const { createCourse } = require('../controllers/courseController');
 
 let channel, connection;
 
@@ -9,12 +9,12 @@ exports.connect = async () => {
     try {
         connection = await amqp.connect(amqpServer);
         channel = await connection.createChannel();
-        await channel.assertQueue("ITEMS");
+        await channel.assertQueue("COURSES");
         console.log("AMQP server running on:", amqpServer);
     } catch (error) {
         console.error("Error connecting to AMQP server:", error);
     }
-}
+};
 
 exports.getChannel = () => {
     return channel;
@@ -26,15 +26,14 @@ exports.consumefromQueue = () => {
         return;
     }
     
-    channel.consume("ITEMS", data => {
+    channel.consume("COURSES", data => {
         try {
-            const { productID, itemReview } = JSON.parse(data.content.toString());
-            console.log("Received message from queue - Product ID:", productID, "Item Review:", itemReview);
+            const courseData = JSON.parse(data.content.toString());
+            console.log("Received message from queue - Course Data:", courseData);
             channel.ack(data);
-            addReview(productID, itemReview);
+            createCourse(courseData); // Assuming courseData contains all required course information
         } catch (error) {
             console.error("Error consuming message from queue:", error);
-            // Handle the error as needed
         }
     });
-}
+};
