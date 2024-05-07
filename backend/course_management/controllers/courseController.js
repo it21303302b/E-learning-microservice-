@@ -1,25 +1,6 @@
 const Course = require('../models/courseModel');
 const mongoose = require('mongoose');
 
-// Middleware to check if user is an instructor
-const checkInstructorRole = (req, res, next) => {
-    if (req.user && req.user.role === 'instructor') {
-        next(); // User is an instructor, proceed to the next middleware
-    } else {
-        res.status(403).json({ error: 'Only instructors can add courses' });
-    }
-};
-
-// Get all courses
-const getAllCourses = async (req, res) => {
-    try {
-        const courses = await Course.find({}).sort({ createdAt: -1 });
-        res.status(200).json(courses);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
 // Get single course
 const getCourse = async (req, res) => {
     const { id } = req.params;
@@ -39,23 +20,38 @@ const getCourse = async (req, res) => {
     }
 };
 
+// Get all courses
+const getAllCourses = async (req, res) => {
+    try {
+        const courses = await Course.find({}).sort({ createdAt: -1 });
+        res.status(200).json(courses);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 // Create new course
 const createCourse = async (req, res) => {
     const { course_name, course_description, course_content, course_price, enrollment_details } = req.body;
 
-    try {
-        // Add instructor ID to the course object
-        const course = await Course.create({ 
-            course_name, 
-            course_description, 
-            course_content, 
-            course_price, 
-            enrollment_details, 
-            instructor: req.user._id 
-        });
-        res.status(201).json(course);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+    // Check if user is an instructor
+    if (req.user && req.user.role === 'instructor') {
+        try {
+            // Add instructor ID to the course object
+            const course = await Course.create({ 
+                course_name, 
+                course_description, 
+                course_content, 
+                course_price, 
+                enrollment_details, 
+                instructor: req.user._id 
+            });
+            res.status(201).json(course);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    } else {
+        res.status(403).json({ error: 'Only instructors can add courses' });
     }
 };
 
@@ -100,7 +96,7 @@ const updateCourse = async (req, res) => {
 module.exports = {
     getAllCourses,
     getCourse,
-    createCourse: [checkInstructorRole, createCourse], // Attach the middleware to createCourse
+    createCourse, // No need for middleware here, authentication is handled inside the function
     deleteCourse,
     updateCourse
 };

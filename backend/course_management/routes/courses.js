@@ -1,5 +1,4 @@
 const express = require('express');
-const { authenticateUser } = require('../middleware/auth');
 const {
     getAllCourses,
     getCourse,
@@ -16,13 +15,13 @@ router.get('/', getAllCourses);
 // GET a single course
 router.get('/:id', getCourse);
 
-// POST a new course (with instructor role check)
-router.post('/', authenticateUser, createCourse);
+// POST a new course (without authentication)
+router.post('/', createCourse);
 
-// DELETE a course
-router.delete('/:id', authenticateUser, deleteCourse);
+// DELETE a course (without authentication)
+router.delete('/:id', deleteCourse);
 
-// UPDATE a course
-router.patch('/:id', authenticateUser, updateCourse);
+// UPDATE a course (without authentication)
+router.patch('/:id', updateCourse);
 
 module.exports = router;
