@@ -1,54 +1,53 @@
 import React from 'react'
-import jwt_decode from 'jwt-decode'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-export default function EmpLogin() {
+export default function InstructorLogin() {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
-  const [role, setRole] = React.useState('seller')
 
-  async function empLogin(event) {
+  async function instructorLogin(event) {
     event.preventDefault()
 
-    const User = {
-      username: email,
+    const user = {
+      email: email,
       password,
     }
 
-    const response = await axios.post(`http://localhost:8070/api/auth/login`, User)
-    const content = response.data
-    const user = content.user
-    const authToken = content.token
-    console.log('this is content', content)
-    console.log('this is User', user)
+    try {
+      const response = await axios.post(`http://localhost:8070/api/auth/login`, user)
+      const content = response.data
 
-    if (content.message === 'Logged in successfully.' && user.role === 'instructor') {
-      localStorage.setItem('session', 'yes')
-      localStorage.setItem('sellerID', user._id)
-      localStorage.setItem('sellerUsername', user.username)
-      localStorage.setItem('sellerPassword', user.password)
-      localStorage.setItem('authToken', authToken)
-      localStorage.setItem('user', 'seller')
-      console.log(localStorage.getItem('session'))
-      console.log(localStorage.getItem('user'))
+      if (content.message === 'Logged in successfully.' && content.user.role === 'instructor') {
+        localStorage.setItem('session', 'yes')
+        localStorage.setItem('instructorID', content.user._id)
+        localStorage.setItem('instructorEmail', content.user.email)
+        localStorage.setItem('authToken', content.token)
+        localStorage.setItem('user', 'instructor')
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Successful...',
-        text: 'Login Successful as an Employee!',
-        footer: '<a href="/empdash">Go to Dashboard</a>',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = '/empdash'
-        }
-      })
-    } else {
+        Swal.fire({
+          icon: 'success',
+          title: 'Successful...',
+          text: 'Login Successful as an Instructor!',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = '/instructordash'
+          }
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Check Your Email & Password Again!!!',
+        })
+      }
+    } catch (error) {
+      console.log('Error: ', error)
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Check Your Email & Passoword Again!!!',
+        text: 'Something went wrong. Please try again later.',
       })
     }
   }
@@ -68,7 +67,7 @@ export default function EmpLogin() {
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 card">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Sign in to your account</h1>
-                <form className="space-y-4 md:space-y-6" onSubmit={empLogin}>
+                <form className="space-y-4 md:space-y-6" onSubmit={instructorLogin}>
                   <div>
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Your email
