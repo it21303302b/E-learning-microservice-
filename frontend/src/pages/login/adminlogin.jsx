@@ -24,7 +24,7 @@ export default function Adminlogin() {
     console.log('this is content', content)
     console.log('this is User', user)
 
-    if (content.message === 'Logged in successfully.') {
+    if (content.message === 'Logged in successfully.' && user.role === 'admin') {
       localStorage.setItem('session', 'yes')
       localStorage.setItem('adminID', user._id)
       localStorage.setItem('empUsername', user.username)

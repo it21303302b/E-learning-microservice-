@@ -10,7 +10,7 @@ export default function EmpRegister() {
   // const [imageUpload, setImageUpload] = useState(null);
   // const [imageList , setImageList] = useState([]);
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [fname, setFname] = useState('')
   const [lname, setLname] = useState('')
   // const [address, setAddress] = useState("");
@@ -21,28 +21,29 @@ export default function EmpRegister() {
 
   // const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
-      e.preventDefault();
+    const user = {
+      username: fname,
+      password,
+      role: 'instructor',
+    }
 
-      const user = {
-        username: fname,
-        password,
-        role: 'seller'
-      }
-
-      try{
-        axios.post("http://localhost:5000/api/auth/register", user).then(() => {
-          console.log('User Registered Successfully');
-          navigate('/login/emplogin');
-        }).catch((err) => {
+    try {
+      axios
+        .post('http://localhost:8070/api/auth/register', user)
+        .then(() => {
+          console.log('User Registered Successfully')
+          navigate('/login/emplogin')
+        })
+        .catch((err) => {
           console.log(err)
         })
-      } catch(err){
-        console.log(err)
-      }
-
+    } catch (err) {
+      console.log(err)
     }
+  }
 
   // navigate("/login/cuslogin");
 
@@ -56,16 +57,13 @@ export default function EmpRegister() {
           <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white regtext">
             <img className="w-10 h-10 mr-2 regimg" src="https://i.ibb.co/dKgfxZQ/cus.png" alt="logo" />
             <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Register As An Seller</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Register as an Instructor</span>
             </h1>
           </a>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-l xl:p-0 dark:bg-gray-800 dark:border-gray-700 cusregform">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Create and account</h1>
-              <form
-                className="space-y-4 md:space-y-6"
-                onSubmit={handleSubmit}
-              >
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Create an Account</h1>
+              <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                 {/* name  */}
                 <div className="grid gap-6 mb-6 md:grid-cols-2">
                   <div>

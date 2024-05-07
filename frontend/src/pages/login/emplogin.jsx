@@ -14,18 +14,17 @@ export default function EmpLogin() {
 
     const User = {
       username: email,
-      password
+      password,
     }
 
-    const response = await axios.post(`http://localhost:5000/api/auth/login`, User);
-    const content = response.data;
-    const user = content.user;
-    const authToken = content.token;
-    console.log("this is content",content);
-    console.log("this is User",user);
+    const response = await axios.post(`http://localhost:8070/api/auth/login`, User)
+    const content = response.data
+    const user = content.user
+    const authToken = content.token
+    console.log('this is content', content)
+    console.log('this is User', user)
 
-    if (content.message === 'Logged in successfully.') {
-
+    if (content.message === 'Logged in successfully.' && user.role === 'instructor') {
       localStorage.setItem('session', 'yes')
       localStorage.setItem('sellerID', user._id)
       localStorage.setItem('sellerUsername', user.username)
@@ -64,7 +63,7 @@ export default function EmpLogin() {
         <section className="bg-gray-50 dark:bg-gray-900 glass glassemp">
           <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <Link to="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-black">
-              <b>Login As An Seller</b>
+              <b>Login as an Instructor</b>
             </Link>
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 card">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
