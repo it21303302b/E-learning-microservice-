@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const User = require('../models/User');
+const mongoose = require('mongoose');
 
 async function registerUser(req, res) {
   const { username, password, role } = req.body;
