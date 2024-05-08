@@ -11,7 +11,7 @@ export default function Cuslogin() {
     event.preventDefault()
 
     const User = {
-      username: email,
+      email: email,
       password,
     }
 
@@ -26,7 +26,6 @@ export default function Cuslogin() {
           icon: 'success',
           title: 'Successful...',
           text: 'Login Successful as a Learner!',
-          footer: '<a href="/cusdash">Go to Dashboard</a>',
         }).then((result) => {
           if (result.isConfirmed) {
             window.location.href = '/cusdash' // Redirect to the learner dashboard page

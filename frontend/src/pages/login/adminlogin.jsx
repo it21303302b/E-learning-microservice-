@@ -1,53 +1,55 @@
-// import { async } from "@firebase/util";
-import React from 'react'
+import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
-export default function Adminlogin() {
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [role, setRole] = React.useState('admin')
+export default function AdminLogin() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   async function adminLogin(event) {
     event.preventDefault()
 
-    const User = {
-      username: email,
-      password,
+    const user = {
+      email: email,
+      password: password,
     }
 
-    const response = await axios.post(`http://localhost:8070/api/auth/login`, User)
-    const content = response.data
-    const user = content.user
-    const authToken = content.token
-    console.log('this is content', content)
-    console.log('this is User', user)
+    console.log(user)
 
-    if (content.message === 'Logged in successfully.' && user.role === 'admin') {
-      localStorage.setItem('session', 'yes')
-      localStorage.setItem('adminID', user._id)
-      localStorage.setItem('empUsername', user.username)
-      localStorage.setItem('empPassword', user.password)
-      localStorage.setItem('authToken', authToken)
-      localStorage.setItem('user', 'ADMIN')
-      console.log(localStorage.getItem('session'))
-      console.log(localStorage.getItem('user'))
+    try {
+      const response = await axios.post('http://localhost:8070/api/auth/login', user)
+      const content = response.data
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Successful...',
-        text: 'Login Successful as an Admin!',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = '/admindash'
-        }
-      })
-    } else {
+      if (content.message === 'Logged in successfully.' && content.user.role === 'admin') {
+        localStorage.setItem('session', 'yes')
+        localStorage.setItem('adminID', content.user._id)
+        localStorage.setItem('adminUsername', content.user.email)
+        localStorage.setItem('authToken', content.token)
+        localStorage.setItem('user', 'ADMIN')
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Successful...',
+          text: 'Login Successful as an Admin!',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = '/admindash'
+          }
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Check your email and password again!',
+        })
+      }
+    } catch (error) {
+      console.log('Error: ', error)
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Check your email and password again!',
+        text: 'Something went wrong. Please try again later.',
       })
     }
   }
@@ -61,13 +63,13 @@ export default function Adminlogin() {
       <div className="logincredcard">
         <section className="bg-gray-50 dark:bg-gray-900 glass glassadmin">
           <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <a href="/cuslogin" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-black">
+            <Link to="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-black">
               <b>Login As An Administrator</b>
-            </a>
+            </Link>
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 card">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Sign in to your account</h1>
-                <form className="space-y-4 md:space-y-6" onSubmit={adminLogin} autocomplete="off">
+                <form className="space-y-4 md:space-y-6" onSubmit={adminLogin} autoComplete="off">
                   <div>
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Your email
@@ -105,13 +107,13 @@ export default function Adminlogin() {
                       Sign up
                     </Link>
                   </p>
+                  <p className="text-sm font-light text-gray-500 dark:text-gray-400 dark:text-black">
+                    Don’t have an account yet?{' '}
+                    <Link to="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                      Bypass
+                    </Link>
+                  </p>
                 </form>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400 dark:text-black">
-                  Don’t have an account yet?{' '}
-                  <Link to="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">
-                    Bypass
-                  </Link>
-                </p>
               </div>
             </div>
           </div>

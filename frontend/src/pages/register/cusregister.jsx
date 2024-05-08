@@ -1,61 +1,69 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { v4 } from 'uuid'
+import axios from 'axios'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 
 export default function CusRegister() {
   const navigate = useNavigate()
-  const [fname, setFname] = useState('')
-  const [lname, setLname] = useState('')
-  const [address, setAddress] = useState('')
-  const [contactno, setContactno] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [mobileNumber, setMobileNumber] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [isErr, setIsErr] = useState('')
 
-  // navigate("/login/cuslogin");
   const checkValidation = (e) => {
     setConfirmPassword(e.target.value)
-    if (password.password !== confirmPassword) {
-      // alert("Password not matched");
-      // setIsErr("Password are not matched");
-      console.log(isErr)
-      console.log(password.password)
-      console.log(confirmPassword)
+    if (password !== e.target.value) {
+      setIsErr('Passwords do not match')
     } else {
       setIsErr('')
     }
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
 
-    const user = {
-      username: fname,
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      setIsErr('Passwords do not match')
+      return
+    }
+
+    const userData = {
+      firstName,
+      lastName,
+      email,
+      mobileNumber,
       password,
       role: 'learner',
     }
 
+    console.log(userData)
+
     try {
-      console.log(user)
+      // Register learner
       axios
-        .post('http://localhost:8070/api/auth/register', user)
+        .post('http://localhost:8070/api/auth/register', userData)
         .then(() => {
           console.log('User Registered Successfully')
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'User registered successfully.',
+          })
+
+          // to login page
           navigate('/login/cuslogin')
         })
         .catch((err) => {
           console.log(err)
         })
-
-      // if (content.success === true) {
-      //   window.location.href = '/login/cuslogin'
-      // }
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -78,7 +86,7 @@ export default function CusRegister() {
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-l xl:p-0 dark:bg-gray-800 dark:border-gray-700 cusregform">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Create an Account</h1>
-              <form className="space-y-4 md:space-y-6" autocomplete="off" onSubmit={handleSubmit}>
+              <form className="space-y-4 md:space-y-6" autoComplete="off" onSubmit={handleSubmit}>
                 {/* name  */}
                 <div className="grid gap-6 mb-6 md:grid-cols-2">
                   <div>
@@ -90,7 +98,8 @@ export default function CusRegister() {
                       id="fname"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="John"
-                      onChange={(e) => setFname(e.target.value)}
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
                       required
                     />
                   </div>
@@ -103,30 +112,17 @@ export default function CusRegister() {
                       id="lname"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Doe"
-                      onChange={(e) => setLname(e.target.value)}
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
                       required
                     />
                   </div>
                 </div>
-                {/* address name */}
-                <div>
-                  <label htmlFor="address" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Address
-                  </label>
-                  <input
-                    type="text"
-                    name="adddress"
-                    id="address"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="No. 134, Main Road, Colombo"
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-                  />
-                </div>
+
                 {/* contactno */}
                 <div>
                   <label htmlFor="contactno" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Contact No
+                    Mobile Number
                   </label>
                   <input
                     type="text"
@@ -134,7 +130,8 @@ export default function CusRegister() {
                     id="contactno"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="011-2364567"
-                    onChange={(e) => setContactno(e.target.value)}
+                    value={mobileNumber}
+                    onChange={(e) => setMobileNumber(e.target.value)}
                     required
                   />
                 </div>
@@ -149,6 +146,7 @@ export default function CusRegister() {
                     id="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@mail.com"
+                    value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
@@ -165,8 +163,8 @@ export default function CusRegister() {
                       id="password"
                       placeholder="••••••••"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      // value = {password}
                       required
                     />
                   </div>
@@ -188,33 +186,6 @@ export default function CusRegister() {
                   </div>
                 </div>
 
-                {/* <div className="grid gap-6 mb-6 md:grid-cols-2">
-                  <div>
-                    <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Upload Profile Picture
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-red-600">
-                      {isErr}
-                    </label>
-                  </div>
-                </div>
-                image */}
-                {/* <div>
-                  <div>
-                    <input
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      id="default_size"
-                      type="file"
-                      name="image"
-                      onChange={(e) => {
-                        setImgurl(e.target.files[0])
-                      }}
-                      required
-                    />
-                  </div>
-                </div> */}
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required />
