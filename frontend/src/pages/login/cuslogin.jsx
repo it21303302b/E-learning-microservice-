@@ -2,8 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import axios from 'axios'
+import { useUser } from '../../context/UserContext'
 
 export default function Cuslogin() {
+  const { setCurrentUser } = useUser()
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
 
@@ -18,17 +20,20 @@ export default function Cuslogin() {
     try {
       const response = await axios.post(`http://localhost:8070/api/auth/login`, User)
       const content = response.data
-      const user = content.user
+      const loggedInUser = content.user
 
-      if (content.message === 'Logged in successfully.' && user.role === 'learner') {
-        // Redirect to learner dashboard if the user is a learner
+      if (content.message === 'Logged in successfully.' && loggedInUser.role === 'learner') {
+        localStorage.setItem('userId', loggedInUser._id)
+        setCurrentUser(loggedInUser._id)
+        console.log(loggedInUser._id)
+
         Swal.fire({
           icon: 'success',
           title: 'Successful...',
           text: 'Login Successful as a Learner!',
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = '/cusdash' // Redirect to the learner dashboard page
+            window.location.href = `/` // to home page
           }
         })
       } else {
