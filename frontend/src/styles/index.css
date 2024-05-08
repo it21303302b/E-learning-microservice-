@@ -258,3 +258,8 @@ button {
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
 }
+
+.added-to-cart-btn2{
+  color: white;
+  background-color: #9b3e00;
+}

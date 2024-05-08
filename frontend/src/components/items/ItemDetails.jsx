@@ -40,15 +40,15 @@ const ItemDetails = () => {
               <p className="course-price">${course.course_price}</p>
               <p className="enrollment-details">{course.enrollment_details}</p>
               {!isAddedToCart(course) ? (
-                <button 
-                  className="add-to-cart-btn" 
+                <button
+                  className="add-to-cart-btn"
                   onClick={() => handleAddToCart(course)}
                 >
                   Add to Cart
                 </button>
               ) : (
-                <button 
-                  className="add-to-cart-btn added-to-cart" 
+                <button
+                  className="add-to-cart-btn added-to-cart"
                   disabled
                 >
                   Added to Cart
