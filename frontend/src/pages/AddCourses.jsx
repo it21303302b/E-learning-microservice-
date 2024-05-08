@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import ItemDetails from '../components/items/ItemDetails'
-import ItemForm from '../components/items/ItemForm'
+import ItemDetails from '../components/items/CourseDetails'
+import ItemForm from '../components/items/CourseForm'
 import Layout from '../components/layout'
 
-const Additems = () => {
+const AddCourses = () => {
   return (
     <div className="home">
       <Layout>
@@ -13,4 +13,4 @@ const Additems = () => {
   )
 }
 
-export default Additems
+export default AddCourses

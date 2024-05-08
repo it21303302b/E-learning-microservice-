@@ -5,8 +5,8 @@ import Home from '../pages/home.jsx'
 import NotFound from '../pages/404'
 import Cart from '../pages/cart'
 import Payment from '../pages/payment'
-import Additems from '../pages/additems'
-import Displayitems from '../pages/displayitems'
+import AddCourses from '../pages/AddCourses'
+import Displayitems from '../pages/DisplayCourses'
 import Addreview from '../pages/addreview'
 import Login from '../pages/login/loginselect'
 import Cuslogin from '../pages/login/cuslogin'
@@ -38,7 +38,7 @@ const AnimatedRoutes = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/Payment" element={<Payment />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="/additems" element={<Additems />} /> 
+        <Route path="/Addcourses" element={<AddCourses />} /> 
         <Route path="/displayitems" element={<Displayitems />} /> 
         <Route path="/addreview/:id" element={<Addreview />} /> 
 
