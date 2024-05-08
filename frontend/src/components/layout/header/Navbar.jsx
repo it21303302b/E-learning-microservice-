@@ -10,6 +10,11 @@ const navigation = [
   { name: 'Home', to: '/', current: true },
   { name: 'Courses', to: '/displayitems', current: false },
   { name: 'Cart', to: '/cart', current: false },
+  { name: 'Purchases', to: '/courseview', current: false }, // New item
+  { name: 'Login', to: '/login', current: false },
+  { name: 'Register', to: '/register', current: false },
+
+  { name: 'Cart', to: '/cart', current: false },
   // { name: 'Login', to: '/login', current: false },
   // { name: 'Register', to: '/register', current: false },
 ]

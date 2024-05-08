@@ -24,6 +24,7 @@ import EmpDanger from '../pages/empdash/empdanger'
 import AdminDash from '../pages/admindash/dash'
 import AdminDashboard from '../pages/AdminDashboard'
 import MyProfile from '../pages/userProfile/MyProfile'
+import CourseView from '../pages/courseView.jsx'
 
 const AnimatedRoutes = () => {
   // useAuth()
@@ -39,6 +40,7 @@ const AnimatedRoutes = () => {
         <Route path="*" element={<NotFound />} />
         <Route path="/additems" element={<Additems />} />
         <Route path="/displayitems" element={<Displayitems />} />
+        <Route path="/courseview" element={<CourseView />} />
         <Route path="/addreview/:id" element={<Addreview />} />
 
         {/* Login Selection */}
