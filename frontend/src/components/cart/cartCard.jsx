@@ -1,37 +1,28 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { removeItem, updateItemQuantity } from '../../store/cartSlice'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeItem } from '../../store/cartSlice';
 import navigate from "navigate";
 
 const CartCard = () => {
-  const dispatch = useDispatch()
-  const cartItems = useSelector((state) => state.cart.items)
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
 
   const handleRemoveItem = (id) => {
-    dispatch(removeItem(id))
-  }
-
-  const handleQuantityChange = (id, value) => {
-    const item = cartItems.find((item) => item._id === id)
-
-    if(value < 1) return;
-
-    const newQuantity = value > item.quantity ? item.quantity + 1 : item.quantity - 1
-    dispatch(updateItemQuantity({ id, quantity: newQuantity }))
-  }
+    dispatch(removeItem(id));
+  };
 
   const handleClick = () => {
-    if(cartItems.length > 0){
+    if (cartItems.length > 0) {
       navigate("/payment");
-      window.location.reload()
-    }else{
-      alert("Cart is empty")
+      window.location.reload();
+    } else {
+      alert("Cart is empty");
     }
-  }
+  };
 
   // Calculate subtotal and shipping
-  const subtotal = cartItems.reduce((acc, item) => acc + item.course_price * item.quantity, 0)
-  const shipping = subtotal > 100 ? subtotal * 0.05 : 0
+  const subtotal = cartItems.reduce((acc, item) => acc + item.course_price * item.quantity, 0);
+  const shipping = subtotal > 100 ? subtotal * 0.05 : 0;
 
   return (
     <div className="h-screen bg-gray-100 pt-10">
@@ -48,13 +39,7 @@ const CartCard = () => {
                 </div>
                 <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
                   <div className="flex items-center border-gray-100">
-                    <span className="cursor-pointer rounded-l bg-green-100 py-1 px-3.5 duration-100 hover:bg-green-800 hover:text-blue-50" onClick={() => handleQuantityChange(item._id, item.quantity - 1)}>
-                      -
-                    </span>
-                    <input className="h-8 w-10 border bg-white text-center text-xs outline-none" type="number" value={item.quantity} min={1} onChange={(e) => handleQuantityChange(item._id, Number(e.target.value))} />
-                    <span className="cursor-pointer rounded-r bg-green-100 py-1 px-3 duration-100 hover:bg-green-800 hover:text-blue-50" onClick={() => handleQuantityChange(item._id, item.quantity + 1)}>
-                      +
-                    </span>
+                    <input className="h-8 w-10 border bg-white text-center text-xs outline-none" type="number" value={item.quantity} min={1} readOnly />
                   </div>
                   <div className="flex items-center space-x-4">
                     <p className="text-md ">LKR {item.course_price}</p>
@@ -91,7 +76,7 @@ const CartCard = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CartCard
+export default CartCard;

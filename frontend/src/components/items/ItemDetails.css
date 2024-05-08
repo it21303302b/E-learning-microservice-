@@ -79,3 +79,10 @@
         background-color: #0056b3;
       }
       
+      .added-to-cart{
+        background-color: green;
+      }
+
+      .added-to-cart:hover{
+        background-color: rgb(8, 65, 1);
+      }

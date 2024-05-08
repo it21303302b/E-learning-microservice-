@@ -71,7 +71,7 @@ const ItemCard = (props) => {
                   onClick={() => {
                     handleAddToCart(course);
                   }}
-                  className="flex items-center justify-center rounded-md px-5 py-2.5 text-center text-sm font-medium  focus:outline-none focus:ring-4 focus:ring-green-300"
+                  className="flex items-center justify-center rounded-md px-5 py-2.5 text-center text-sm font-medium  focus:outline-none focus:ring-4 focus:ring-green-300 add-to-cart-btn"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +87,7 @@ const ItemCard = (props) => {
                 </Button>
               ) : (
                 <Button
-                  className="flex items-center justify-center rounded-md px-5 py-2.5 text-center text-sm font-medium  focus:outline-none focus:ring-4 focus:ring-green-300 added-to-cart"
+                  className="flex items-center justify-center rounded-md px-5 py-2.5 text-center text-sm font-medium  focus:outline-none focus:ring-4 focus:ring-green-300 added-to-cart-btn2"
                   disabled
                 >
                   Added to cart
