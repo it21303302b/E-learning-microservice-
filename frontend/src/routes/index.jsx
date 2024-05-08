@@ -23,9 +23,8 @@ import EmpUpdate from '../pages/empdash/empupdate'
 import EmpDanger from '../pages/empdash/empdanger'
 import AdminDash from '../pages/admindash/dash'
 import AdminDashboard from '../pages/AdminDashboard'
+import MyProfile from '../pages/userProfile/MyProfile'
 import CourseView from '../pages/courseView.jsx'
-
-
 
 const AnimatedRoutes = () => {
   // useAuth()
@@ -39,36 +38,37 @@ const AnimatedRoutes = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/Payment" element={<Payment />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="/additems" element={<Additems />} /> 
-        <Route path="/displayitems" element={<Displayitems />} /> 
-        <Route path="/courseview" element={<CourseView />} /> 
-        <Route path="/addreview/:id" element={<Addreview />} /> 
+        <Route path="/additems" element={<Additems />} />
+        <Route path="/displayitems" element={<Displayitems />} />
+        <Route path="/courseview" element={<CourseView />} />
+        <Route path="/addreview/:id" element={<Addreview />} />
 
         {/* Login Selection */}
-					<Route path="/login" element={<Login />} />
-					<Route path="/login/cuslogin" element={<Cuslogin />} />
-					<Route path="/login/emplogin" element={<Emplogin />} />
-					<Route path="/login/adminlogin" element={<Adminlogin />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/login/cuslogin" element={<Cuslogin />} />
+        <Route path="/login/emplogin" element={<Emplogin />} />
+        <Route path="/login/adminlogin" element={<Adminlogin />} />
 
-          {/* Register Selection */}
-					<Route path="/register" element={<Register />} />
-					<Route path="/register/cusregister" element={<CusRegister />} />
-					<Route path="/register/empregister" element={<EmpRegister />} />
+        {/* Register Selection */}
+        <Route path="/register" element={<Register />} />
+        <Route path="/register/cusregister" element={<CusRegister />} />
+        <Route path="/register/empregister" element={<EmpRegister />} />
 
-					{/* Seller Dashboard */}
-					<Route path="/empdash" element={<EmpDash />} />
-					<Route path="/empdash/empupdate/:id" element={<EmpUpdate/>}/> 
-					<Route path="/empdash/empdanger/:id" element={<EmpDanger/>}/> 
+        {/* Seller Dashboard */}
+        <Route path="/empdash" element={<EmpDash />} />
+        <Route path="/empdash/empupdate/:id" element={<EmpUpdate />} />
+        <Route path="/empdash/empdanger/:id" element={<EmpDanger />} />
 
-					{/* Customer Dashboard */}
-					<Route path="/cusdash" element={<CusDash />} />
-					<Route path="/cusdash/cusupdate/:id" element={<CusUpdate />} />
-					<Route path="/cusdash/cusdanger" element={<CusDanger />} />
-          
-					{/* Admin Dashboard */}
-					<Route path="/admindash" element={<AdminDash />} />
-          <Route path='/admin' element={<AdminDashboard/>}/>
+        {/* Customer Dashboard */}
+        <Route path="/cusdash" element={<CusDash />} />
+        <Route path="/cusdash/cusupdate/:id" element={<CusUpdate />} />
+        <Route path="/cusdash/cusdanger" element={<CusDanger />} />
 
+        {/* Admin Dashboard */}
+        <Route path="/admindash" element={<AdminDash />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+
+        <Route path="/myprofile/:id" element={<MyProfile />} />
       </Routes>
     </AnimatePresence>
   )
