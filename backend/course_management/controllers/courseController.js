@@ -32,14 +32,16 @@ const getAllCourses = async (req, res) => {
 
 // Create new course
 const createCourse = async (req, res) => {
-    const { course_name, course_description, course_content, course_price } = req.body;
+    const { course_name, course_description, course_content, course_price, instructor_email, instructor_id } = req.body;
 
     try {
         const course = await Course.create({ 
             course_name, 
             course_description, 
             course_content, 
-            course_price
+            course_price,
+            instructor_email,
+            instructor_id
         });
         res.status(201).json(course);
     } catch (error) {

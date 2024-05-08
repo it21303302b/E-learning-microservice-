@@ -32,7 +32,7 @@ export default function InstructorLogin() {
           text: 'Login Successful as an Instructor!',
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = '/empdash'
+            window.location.href = '/instructordash'
           }
         })
       } else {
