@@ -1,88 +1,64 @@
-.product_style {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-    }
-    
-    .product_style h1 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    }
-    
-    .product_style p {
-    font-size: 16px;
-    line-height: 1.5;
-    margin-bottom: 5px;
-    }
+.card {
+  width: calc(33.33% - 20px);
+  margin: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
 
-    .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: auto;
-      }
-      
-      .card-container {
-        display: flex;
-        flex-wrap: wrap;
-      }
-      
-      .card {
-        width: calc(33.33% - 20px);
-        margin: 10px;
-        background-color: #fff;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        overflow: hidden;
-      }
-      
-      .card-content {
-        padding: 20px;
-      }
-      
-      .course-name {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 10px;
-      }
-      
-      .course-description {
-        font-size: 16px;
-        margin-bottom: 10px;
-      }
-      
-      .course-price {
-        font-size: 18px;
-        font-weight: bold;
-      }
-      
-      .enrollment-details {
-        font-size: 16px;
-        margin-top: 10px;
-      }
-      
-      .add-to-cart-btn {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-      
-      .add-to-cart-btn:hover {
-        background-color: #0056b3;
-      }
-      
-      .added-to-cart{
-        background-color: green;
-      }
+.card:hover {
+  transform: translateY(-5px);
+}
 
-      .added-to-cart:hover{
-        background-color: rgb(8, 65, 1);
-      }
+.card-content {
+  padding: 20px;
+}
+
+.course-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333333;
+}
+
+.course-description {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #666666;
+}
+
+.course-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.enrollment-details {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.add-to-cart-btn {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #0056b3;
+}
+
+.added-to-cart {
+  background-color: #28a745;
+}
+
+.added-to-cart:hover {
+  background-color: #218838;
+}
