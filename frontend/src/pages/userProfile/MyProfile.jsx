@@ -3,12 +3,16 @@ import Navbar from '../../components/layout/header/Navbar'
 import axios from 'axios'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
 export default function MyProfile() {
   const userId = localStorage.getItem('userId')
   const [userData, setUserData] = useState(null)
   const [showUpdateProfile, setShowUpdateProfile] = useState(false)
+  const [showUpdatePassword, setShowUpdatePassword] = useState(false)
+  const [passwordData, setPasswordData] = useState({
+    newPassword: '',
+    confirmPassword: '',
+  })
 
   useEffect(() => {
     if (userId) {
@@ -25,12 +29,80 @@ export default function MyProfile() {
     }
   }, [])
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setUserData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
+
+  const handleSaveProfile = () => {
+    // update user profile
+    axios
+      .patch(`http://localhost:8070/api/auth/user/${userId}`, userData)
+      .then((response) => {
+        console.log(response.data)
+        setShowUpdateProfile(false)
+      })
+      .catch((error) => {
+        console.error('Error updating profile:', error)
+      })
+  }
+
+  const handleSavePassword = (e) => {
+    e.preventDefault()
+
+    const { newPassword, confirmPassword } = passwordData
+
+    // Check if new password and confirm password match
+    if (newPassword !== confirmPassword) {
+      console.error('Passwords do not match')
+      return
+    }
+
+    // Send a PATCH request to update the password
+    axios
+      .patch(`http://localhost:8070/api/auth/user/${userId}`, { password: newPassword })
+      .then((response) => {
+        console.log(response.data)
+        setShowUpdatePassword(false)
+      })
+      .catch((error) => {
+        console.error('Error updating password:', error)
+      })
+  }
+
+  const handleDeleteProfile = () => {
+    // Send a DELETE request to delete the user
+    axios
+      .delete(`http://localhost:8070/api/auth/user/${userId}`)
+      .then((response) => {
+        console.log(response.data)
+        // Clear localStorage
+        localStorage.removeItem('userId')
+        // Redirect to login page
+        window.location.href = '/login' // Replace '/login' with your actual login page URL
+      })
+      .catch((error) => {
+        console.error('Error deleting user:', error)
+      })
+  }
+
   const handleClickUpdateProfile = () => {
     setShowUpdateProfile(true)
   }
 
   const handleCloseUpdateProfile = () => {
     setShowUpdateProfile(false)
+  }
+
+  const handleClickUpdatePassword = () => {
+    setShowUpdatePassword(true)
+  }
+
+  const handleCloseUpdatePassword = () => {
+    setShowUpdatePassword(false)
   }
 
   return (
@@ -78,17 +150,71 @@ export default function MyProfile() {
               )}
             </dl>
           </div>
-          <div className="flex items-center mx-auto">
+          <div>
+            <div className="flex items-center mx-auto">
+              <button
+                type="button"
+                onClick={handleClickUpdateProfile}
+                class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              >
+                Update Profile
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteProfile}
+                class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              >
+                Delete Profile
+              </button>
+            </div>
             <button
               type="button"
-              onClick={handleClickUpdateProfile}
-              class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              onClick={handleClickUpdatePassword}
+              class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             >
-              Update Profile
+              Reset Password
             </button>
-            <button type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-              Delete Profile
-            </button>
+            {showUpdatePassword && (
+              <Transition.Root show={showUpdatePassword} as={Fragment}>
+                <Dialog className="fixed inset-0 overflow-hidden" onClose={handleCloseUpdatePassword}>
+                  {/* Overlay */}
+                  <Transition.Child as={Fragment} enter="ease-in-out duration-500" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in-out duration-500" leaveFrom="opacity-100" leaveTo="opacity-0">
+                    <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                  </Transition.Child>
+
+                  {/* Dialog Content */}
+                  <Transition.Child as={Fragment} enter="transform transition ease-in-out duration-500 sm:duration-700" enterFrom="translate-x-full" enterTo="translate-x-0" leave="transform transition ease-in-out duration-500 sm:duration-700" leaveFrom="translate-x-0" leaveTo="translate-x-full">
+                    <div className="absolute inset-0 overflow-hidden">
+                      <div className="flex justify-end pt-4 pr-4">
+                        <button type="button" className="text-gray-300 hover:text-white focus:outline-none" onClick={handleCloseUpdatePassword}>
+                          <XMarkIcon className="h-10 w-10" aria-hidden="true" />
+                        </button>
+                      </div>
+                      <div className="flex h-fit flex-col bg-white py-6 shadow-xl max-w-screen-md mx-auto p-10 rounded-md">
+                        <h2 className="text-2xl font-semibold mb-4">Update Password</h2>
+                        <form onSubmit={handleSavePassword} className="w-full max-w-sm">
+                          <div className="flex flex-col mb-4">
+                            <label htmlFor="newPassword" className="text-gray-700">
+                              New Password
+                            </label>
+                            <input type="password" id="newPassword" name="newPassword" className="border-gray-300 border rounded-md px-3 py-2 mt-1" value={passwordData.newPassword} onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })} />
+                          </div>
+                          <div className="flex flex-col mb-4">
+                            <label htmlFor="confirmPassword" className="text-gray-700">
+                              Confirm New Password
+                            </label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" className="border-gray-300 border rounded-md px-3 py-2 mt-1" value={passwordData.confirmPassword} onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })} />
+                          </div>
+                          <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300">
+                            Update Password
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </Transition.Child>
+                </Dialog>
+              </Transition.Root>
+            )}
           </div>
         </div>
       </div>
@@ -112,7 +238,7 @@ export default function MyProfile() {
                 </div>
                 <div className="relative mt-6 flex-1 px-4 sm:px-6">
                   {/* profile update form */}
-                  <form>
+                  <form onSubmit={handleSaveProfile}>
                     <div className="space-y-12 ">
                       <div className="border-2 p-5 border-gray-900/10 rounded-md shadow-md">
                         <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -123,10 +249,12 @@ export default function MyProfile() {
                             <div className="mt-2">
                               <input
                                 type="text"
-                                name="first-name"
-                                id="first-name"
+                                name="firstName"
+                                id="firstName"
                                 autoComplete="given-name"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                value={userData?.firstName || ''}
+                                onChange={handleInputChange}
                               />
                             </div>
                           </div>
@@ -138,10 +266,12 @@ export default function MyProfile() {
                             <div className="mt-2">
                               <input
                                 type="text"
-                                name="last-name"
-                                id="last-name"
+                                name="lastName"
+                                id="lastName"
                                 autoComplete="family-name"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                value={userData?.lastName || ''}
+                                onChange={handleInputChange}
                               />
                             </div>
                           </div>
@@ -157,6 +287,8 @@ export default function MyProfile() {
                                 type="email"
                                 autoComplete="email"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                value={userData?.email || ''}
+                                onChange={handleInputChange}
                               />
                             </div>
                           </div>
@@ -169,63 +301,19 @@ export default function MyProfile() {
                               <input
                                 id="mobileNumber"
                                 name="mobileNumber"
-                                type="mobileNumber"
+                                type="tel"
                                 autoComplete="mobileNumber"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                              />
-                            </div>
-                          </div>
-
-                          <div className="sm:col-span-2 sm:col-start-1">
-                            <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
-                              City
-                            </label>
-                            <div className="mt-2">
-                              <input
-                                type="text"
-                                name="city"
-                                id="city"
-                                autoComplete="address-level2"
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                              />
-                            </div>
-                          </div>
-
-                          <div className="sm:col-span-2">
-                            <label htmlFor="region" className="block text-sm font-medium leading-6 text-gray-900">
-                              State / Province
-                            </label>
-                            <div className="mt-2">
-                              <input
-                                type="text"
-                                name="region"
-                                id="region"
-                                autoComplete="address-level1"
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                              />
-                            </div>
-                          </div>
-
-                          <div className="sm:col-span-2">
-                            <label htmlFor="postal-code" className="block text-sm font-medium leading-6 text-gray-900">
-                              ZIP / Postal code
-                            </label>
-                            <div className="mt-2">
-                              <input
-                                type="text"
-                                name="postal-code"
-                                id="postal-code"
-                                autoComplete="postal-code"
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                value={userData?.mobileNumber || ''}
+                                onChange={handleInputChange}
                               />
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-
                     <div className="mt-6 flex items-center justify-end gap-x-6">
-                      <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
+                      <button type="button" onClick={handleCloseUpdateProfile} className="text-sm font-semibold leading-6 text-gray-900">
                         Cancel
                       </button>
                       <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
