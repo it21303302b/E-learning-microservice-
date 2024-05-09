@@ -1,28 +1,28 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeItem } from '../../store/cartSlice';
-import navigate from "navigate";
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { removeItem } from '../../store/cartSlice'
+import navigate from 'navigate'
 
 const CartCard = () => {
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch()
+  const cartItems = useSelector((state) => state.cart.items)
 
   const handleRemoveItem = (id) => {
-    dispatch(removeItem(id));
-  };
+    dispatch(removeItem(id))
+  }
 
   const handleClick = () => {
     if (cartItems.length > 0) {
-      navigate("/payment");
-      window.location.reload();
+      navigate('/payment')
+      window.location.reload()
     } else {
-      alert("Cart is empty");
+      alert('Cart is empty')
     }
-  };
+  }
 
   // Calculate subtotal and shipping
-  const subtotal = cartItems.reduce((acc, item) => acc + item.course_price * item.quantity, 0);
-  const shipping = subtotal > 100 ? subtotal * 0.05 : 0;
+  const subtotal = cartItems.reduce((acc, item) => acc + item.course_price * item.quantity, 0)
+  const shipping = subtotal > 100 ? subtotal * 0.05 : 0
 
   return (
     <div className="h-screen bg-gray-100 pt-10">
@@ -72,11 +72,13 @@ const CartCard = () => {
               <p className="mb-1 text-lg font-bold">LKR {subtotal + shipping}</p>
             </div>
           </div>
-          <button onClick={handleClick} className="mt-6 w-full rounded-md bg-green-800 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
+          <button onClick={handleClick} data-toggle="modal" data-target="#staticBackdrop" className="mt-6 w-full rounded-md bg-green-800 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
+            Check out
+          </button>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CartCard;
+export default CartCard
