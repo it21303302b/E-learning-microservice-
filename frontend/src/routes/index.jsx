@@ -9,9 +9,9 @@ import Payment from '../pages/payment'
 // Malika's Routes
 import AddCourses from '../pages/AddCourses'
 import DisplayCourses from '../pages/DisplayCourses'
-import InstructorDash from '../pages/instructorDash/dash'
-import InstructorUpdate from '../pages/instructorDash/empupdate'
-import InstructorDanger from '../pages/instructorDash/empdanger'
+import InstructorDash from '../pages/instructorDash/InstructorDash'
+import InstructorUpdate from '../pages/instructorDash/UpdateInstructor'
+import InstructorCourses from '../pages/instructorDash/InstructorCourses'
 import EmpRegister from '../pages/register/empregister'
 import Emplogin from '../pages/login/emplogin'
 
@@ -57,10 +57,10 @@ const AnimatedRoutes = () => {
 					<Route path="/register/empregister" element={<EmpRegister />} />
 
 					{/* Instructor Dashboard */}
-					<Route path="/instructordash" element={<InstructorDash />} />
-					<Route path="/instructordash/instructorupdate/:id" element={<InstructorUpdate/>}/> 
-					<Route path="/instructordash/instructordanger/:id" element={<InstructorDanger/>}/> 
-
+					<Route path="/instructorDash" element={<InstructorDash />} />
+          <Route path="/instructorUpdate" element={<InstructorUpdate />} />
+          <Route path="/instructorCourses" element={<InstructorCourses />} />
+          
 					{/* Customer Dashboard */}
 					<Route path="/cusdash" element={<CusDash />} />
 					<Route path="/cusdash/cusupdate/:id" element={<CusUpdate />} />
