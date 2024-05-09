@@ -3,6 +3,7 @@ import Navbar from '../../components/layout/header/Navbar'
 import axios from 'axios'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import Swal from 'sweetalert2'
 
 export default function MyProfile() {
   const userId = localStorage.getItem('userId')
@@ -37,17 +38,35 @@ export default function MyProfile() {
     }))
   }
 
-  const handleSaveProfile = () => {
-    // update user profile
-    axios
-      .patch(`http://localhost:8070/api/auth/user/${userId}`, userData)
-      .then((response) => {
+  const handleSaveProfile = async () => {
+    // Prompt for confirmation using SweetAlert2
+    const confirmation = await Swal.fire({
+      title: 'Confirm Profile Update',
+      text: 'Are you sure you want to update your profile?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6', // Customize confirm button color (optional)
+      cancelButtonColor: '#d33', // Customize cancel button color (optional)
+      confirmButtonText: 'Yes, Save',
+      cancelButtonText: 'No, Cancel',
+    })
+
+    // Proceed with profile update only if confirmed
+    if (confirmation.isConfirmed) {
+      try {
+        const response = await axios.patch(`http://localhost:8070/api/auth/user/${userId}`, userData)
         console.log(response.data)
         setShowUpdateProfile(false)
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Error updating profile:', error)
-      })
+        // Optionally display an error message to the user using SweetAlert2
+        Swal.fire({
+          title: 'Error!',
+          text: 'There was an error updating your profile. Please try again later.',
+          icon: 'error',
+        })
+      }
+    }
   }
 
   const handleSavePassword = (e) => {
@@ -78,11 +97,28 @@ export default function MyProfile() {
     axios
       .delete(`http://localhost:8070/api/auth/user/${userId}`)
       .then((response) => {
-        console.log(response.data)
-        // Clear localStorage
-        localStorage.removeItem('userId')
-        // Redirect to login page
-        window.location.href = '/login' // Replace '/login' with your actual login page URL
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'Your file has been deleted.',
+              icon: 'success',
+            })
+            console.log(response.data)
+            // Clear localStorage
+            localStorage.removeItem('userId')
+            // Redirect to login page
+            window.location.href = '/login' // Replace '/login' with your actual login page UR
+          }
+        })
       })
       .catch((error) => {
         console.error('Error deleting user:', error)
@@ -150,29 +186,28 @@ export default function MyProfile() {
               )}
             </dl>
           </div>
-          <div>
-            <div className="flex items-center mx-auto">
-              <button
-                type="button"
-                onClick={handleClickUpdateProfile}
-                class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-              >
-                Update Profile
-              </button>
-              <button
-                type="button"
-                onClick={handleDeleteProfile}
-                class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-              >
-                Delete Profile
-              </button>
-            </div>
+          <div className="flex items-center mx-auto">
+            <button
+              type="button"
+              onClick={handleClickUpdateProfile}
+              className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            >
+              Update Profile
+            </button>
+
             <button
               type="button"
               onClick={handleClickUpdatePassword}
-              class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             >
               Reset Password
+            </button>
+            <button
+              type="button"
+              onClick={handleDeleteProfile}
+              className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            >
+              Delete Profile
             </button>
             {showUpdatePassword && (
               <Transition.Root show={showUpdatePassword} as={Fragment}>
@@ -232,7 +267,7 @@ export default function MyProfile() {
                   <XMarkIcon className="h-10 w-10" aria-hidden="true" />
                 </button>
               </div>
-              <div className="flex h-fit flex-col overflow-y-scroll bg-white py-6 shadow-xl max-w-screen-md mx-auto">
+              <div className="flex h-fit flex-col bg-white py-6 shadow-xl max-w-screen-md mx-auto">
                 <div className="px-4 sm:px-6">
                   <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">Update Profile</Dialog.Title>
                 </div>
@@ -313,10 +348,10 @@ export default function MyProfile() {
                       </div>
                     </div>
                     <div className="mt-6 flex items-center justify-end gap-x-6">
-                      <button type="button" onClick={handleCloseUpdateProfile} className="text-sm font-semibold leading-6 text-gray-900">
+                      <button type="button" onClick={handleCloseUpdateProfile} className="leading-6 text-gray-900 font-medium rounded-lg text-sm  py-2.5 text-center me-2 mb-2">
                         Cancel
                       </button>
-                      <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                      <button type="submit" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                         Save
                       </button>
                     </div>

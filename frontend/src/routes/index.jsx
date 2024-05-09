@@ -1,6 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
-import { useAuth } from '../hooks'
 import Home from '../pages/home.jsx'
 import NotFound from '../pages/404'
 import Cart from '../pages/cart'
@@ -27,8 +26,6 @@ import MyProfile from '../pages/userProfile/MyProfile'
 import CourseView from '../pages/courseView.jsx'
 
 const AnimatedRoutes = () => {
-  // useAuth()
-
   const location = useLocation()
 
   return (
