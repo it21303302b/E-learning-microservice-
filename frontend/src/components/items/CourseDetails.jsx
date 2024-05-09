@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'; // Import Link
 import './CourseDetails.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -113,6 +114,7 @@ const CourseDetails = () => {
 
   return (
     <div>
+      <Link to="/instructorDash">Back to Instructor Dashboard</Link> {/* Add Link to Instructor Dashboard */}
       {courses.map((course, index) => (
         <div className="course_style" key={index}>
           {editingCourseId === course._id ? (
