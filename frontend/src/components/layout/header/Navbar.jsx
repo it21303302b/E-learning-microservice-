@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Fragment } from 'react'
 import axios from 'axios'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
@@ -7,21 +7,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const navigation = [
-
-
-
   { name: 'Home', to: '/', current: true },
   { name: 'Courses', to: '/displayitems', current: false },
-
   { name: 'Cart', to: '/cart', current: false },
   { name: 'Purchases', to: '/courseview', current: false }, // New item
 
 
+
+
+  { name: 'Cart', to: '/cart', current: false },
+
   // { name: 'Login', to: '/login', current: false },
   // { name: 'Register', to: '/register', current: false },
-  
-
-
 ]
 
 function classNames(...classes) {
@@ -30,6 +27,28 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const navigate = useNavigate()
+  const userId = localStorage.getItem('userId')
+  useEffect(() => {
+    // Fetch user data or perform any other actions when the component mounts
+    // Example: Fetch user data based on the user ID
+
+    if (userId) {
+      // Fetch user data using the user ID
+      axios
+        .get(`http://localhost:8070/api/auth/user/${userId}`)
+        .then((response) => {
+          // Handle response
+          console.log(response.data)
+        })
+        .catch((error) => {
+          console.error('Error fetching user data:', error)
+        })
+    }
+  }, [])
+
+  useEffect(() => {
+    axios.get()
+  })
   const logoutUser = () => {
     axios
       .post(
@@ -48,6 +67,7 @@ export default function Navbar() {
             title: 'Successful...',
             text: 'Logout Successful',
           })
+          localStorage.removeItem('userId') // Remove user ID from local storage
           navigate('/login') // Redirect to login page after successful logout
         } else {
           throw new Error('Logout failed')
@@ -113,9 +133,9 @@ export default function Navbar() {
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a href="#" className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>
+                          <Link to={`/myprofile/${userId}`} className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>
                             Your Profile
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
