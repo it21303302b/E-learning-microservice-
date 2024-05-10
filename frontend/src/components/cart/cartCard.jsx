@@ -1,18 +1,20 @@
+
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem } from '../../store/cartSlice';
 import navigate from 'navigate';
 
 const CartCard = () => {
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch()
+  const cartItems = useSelector((state) => state.cart.items)
 
   const handleRemoveItem = (id) => {
-    dispatch(removeItem(id));
-  };
+    dispatch(removeItem(id))
+  }
 
   const handleClick = () => {
     if (cartItems.length > 0) {
+
       // Save course IDs and total price to local storage
       const courseIDs = cartItems.map(item => item._id);
       const total = cartItems.reduce((acc, item) => acc + item.course_price * item.quantity, 0);
@@ -33,9 +35,12 @@ const CartCard = () => {
   
   
 
+
+
+
   // Calculate subtotal and shipping
-  const subtotal = cartItems.reduce((acc, item) => acc + item.course_price * item.quantity, 0);
-  const shipping = subtotal > 100 ? subtotal * 0.05 : 0;
+  const subtotal = cartItems.reduce((acc, item) => acc + item.course_price * item.quantity, 0)
+  const shipping = subtotal > 100 ? subtotal * 0.05 : 0
 
   return (
     <div className="h-screen bg-gray-100 pt-10">
@@ -91,7 +96,7 @@ const CartCard = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CartCard;
+export default CartCard

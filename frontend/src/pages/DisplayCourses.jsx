@@ -1,19 +1,16 @@
-
 import { useEffect, useState } from 'react'
-import ItemDetails from '../components/items/coursePageCard'
-import ItemForm from '../components/items/ItemForm'
+import CourseDetails from '../components/items/CourseDetails'
 import Layout from '../components/layout'
 
-const Displayitems = () =>{
+const DisplayCourses = () =>{
     return(
         <div className="home">
             <Layout>
-            <ItemDetails/>
+            <CourseDetails/>
             </Layout>
 
         </div>
     )
 }
 
-export default Displayitems
-
+export default DisplayCourses
