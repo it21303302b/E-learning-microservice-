@@ -112,6 +112,16 @@ const CourseDetails = () => {
     });
   };
 
+  const handleCancel = () => {
+    // Reset editing state
+    setEditingCourseId(null);
+    // Reset updated course data
+    setUpdatedCourseName('');
+    setUpdatedCourseDescription('');
+    setUpdatedCourseLectureNotes('');
+    setUpdatedCoursePrice('');
+  };
+
   return (
     <div>
       <Link to="/instructorDash">Back to Instructor Dashboard</Link> {/* Navigate back to Instructor Dashboard */}
@@ -147,7 +157,11 @@ const CourseDetails = () => {
                 onChange={(e) => setUpdatedCoursePrice(e.target.value)}
               />
               <br />
+              <span>Course Image:</span>
+              <img src={course.course_img} alt="Course Image" />
+              <br />
               <button onClick={() => handleUpdate(course._id)}>Update</button>
+              <button onClick={handleCancel}>Cancel</button>
             </div>
           ) : (
             <div>
@@ -160,6 +174,10 @@ const CourseDetails = () => {
               <p>Lecture Notes: {course.course_content.lecture_notes}</p>
               <br />
               <p>Course Price: {course.course_price}</p>
+              <br />
+              <p>Course Image:</p>
+              <img src={course.course_img} alt="Course Image" />
+              <br />
               <button onClick={() => handleEdit(course._id, course.course_name, course.course_description, course.course_content.lecture_notes, course.course_price)}>Edit</button>
               <button onClick={() => handleDelete(course._id)}>Delete</button>
             </div>
@@ -168,7 +186,6 @@ const CourseDetails = () => {
       ))}
     </div>
   );
-  
 };
 
 export default CourseDetails;
