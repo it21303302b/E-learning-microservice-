@@ -27,6 +27,7 @@ import AdminDash from '../pages/admindash/dash'
 import AdminDashboard from '../pages/AdminDashboard'
 import MyProfile from '../pages/userProfile/MyProfile'
 import ItemDetails from '../components/items/coursePageCard.jsx'
+import CoursePurchases from '../pages/coursePurchases.jsx'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -63,6 +64,7 @@ const AnimatedRoutes = () => {
         <Route path="/cusdash/cusupdate/:id" element={<CusUpdate />} />
         <Route path="/cusdash/cusdanger" element={<CusDanger />} />
         <Route path="/displayitems" element={<Displayitems />} />
+        <Route path="/coursepurchases" element={<CoursePurchases />} />
 
         {/* Admin Dashboard */}
         <Route path="/admindash" element={<AdminDash />} />
