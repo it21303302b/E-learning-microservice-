@@ -1,12 +1,10 @@
+// routes/paymentRoutes.js
+
 const express = require('express');
-const { addPayment, getPayments, getPayment, deletePayment } = require('../controller/payment'); //impoert functions from the controller
-const { authenticateUser } = require('../middlewares/auth'); //import authentication function
 const router = express.Router();
+const { createPayment } = require('../controller/paymentController');
 
-router.post('/v1/payments', addPayment); //create payment route, removed authentication for developing 
-router.get('/v1/payments', getPayments); //get all payments route
-router.get('/v1/payments/:id', getPayment); //get payment by id route
-router.delete('/v1/payments/:id', deletePayment); // delete payment route
+// Create a new payment
+router.post('/add', createPayment);
 
-//exports routes
 module.exports = router;

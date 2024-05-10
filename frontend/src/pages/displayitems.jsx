@@ -8,11 +8,6 @@ const Displayitems = () =>{
         <div className="home">
            <Navbar />
             <ItemDetails />
-            
-        
-        
-
-            
                 
 
         </div>
