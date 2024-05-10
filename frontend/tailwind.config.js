@@ -25,12 +25,7 @@ module.exports = {
         'profile-card': 'rgba(255, 255, 255, 0.02)',
         card: '#181818',
       },
-      fontFamily: {
-        inter: ['Inter', 'sans-serif'],
-        poppins: ['Poppins', 'sans-serif'],
-      },
-      height: {},
     },
   },
-  plugins: [require('flowbite/plugin')],
+  plugins: [require('@tailwindcss/forms'), require('flowbite/plugin')],
 }

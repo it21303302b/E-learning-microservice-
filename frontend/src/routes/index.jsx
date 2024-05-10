@@ -1,6 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
-import { useAuth } from '../hooks'
 import Home from '../pages/home.jsx'
 import NotFound from '../pages/404'
 import Cart from '../pages/cart'
@@ -26,12 +25,10 @@ import CusUpdate from '../pages/cusdash/cusupdate'
 import CusDanger from '../pages/cusdash/cusdanger'
 import AdminDash from '../pages/admindash/dash'
 import AdminDashboard from '../pages/AdminDashboard'
-
-
+import MyProfile from '../pages/userProfile/MyProfile'
+import CourseView from '../pages/courseView.jsx'
 
 const AnimatedRoutes = () => {
-  // useAuth()
-
   const location = useLocation()
 
   return (
@@ -45,16 +42,22 @@ const AnimatedRoutes = () => {
         <Route path="/DisplayCourses" element={<DisplayCourses />} /> 
         <Route path="/addreview/:id" element={<Addreview />} /> 
 
-        {/* Login Selection */}
-					<Route path="/login" element={<Login />} />
-					<Route path="/login/cuslogin" element={<Cuslogin />} />
-					<Route path="/login/emplogin" element={<Emplogin />} />
-					<Route path="/login/adminlogin" element={<Adminlogin />} />
 
-          {/* Register Selection */}
-					<Route path="/register" element={<Register />} />
-					<Route path="/register/cusregister" element={<CusRegister />} />
-					<Route path="/register/empregister" element={<EmpRegister />} />
+        {/* Login Selection */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/login/cuslogin" element={<Cuslogin />} />
+        <Route path="/login/emplogin" element={<Emplogin />} />
+        <Route path="/login/adminlogin" element={<Adminlogin />} />
+
+        {/* Register Selection */}
+        <Route path="/register" element={<Register />} />
+        <Route path="/register/cusregister" element={<CusRegister />} />
+        <Route path="/register/empregister" element={<EmpRegister />} />
+
+        {/* Seller Dashboard */}
+        <Route path="/empdash" element={<EmpDash />} />
+        <Route path="/empdash/empupdate/:id" element={<EmpUpdate />} />
+        <Route path="/empdash/empdanger/:id" element={<EmpDanger />} />
 
 					{/* Instructor Dashboard */}
 					<Route path="/instructorDash" element={<InstructorDash />} />
@@ -70,6 +73,8 @@ const AnimatedRoutes = () => {
 					<Route path="/admindash" element={<AdminDash />} />
           <Route path='/admin' element={<AdminDashboard/>}/>
 
+
+        <Route path="/myprofile/:id" element={<MyProfile />} />
       </Routes>
     </AnimatePresence>
   )

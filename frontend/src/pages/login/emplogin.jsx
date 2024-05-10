@@ -33,6 +33,7 @@ export default function InstructorLogin() {
         }).then((result) => {
           if (result.isConfirmed) {
             window.location.href = '/instructorDash'
+
           }
         })
       } else {
