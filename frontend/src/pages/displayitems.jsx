@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import ItemDetails from '../components/items/ItemDetails'
+import ItemDetails from '../components/items/coursePageCard'
 import ItemForm from '../components/items/ItemForm'
 import Layout from '../components/layout'
 
