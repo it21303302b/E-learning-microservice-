@@ -1,7 +1,8 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { removeItem } from '../../store/cartSlice'
-import navigate from 'navigate'
+
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeItem } from '../../store/cartSlice';
+import navigate from 'navigate';
 
 const CartCard = () => {
   const dispatch = useDispatch()
@@ -13,12 +14,29 @@ const CartCard = () => {
 
   const handleClick = () => {
     if (cartItems.length > 0) {
-      navigate('/payment')
-      window.location.reload()
+
+      // Save course IDs and total price to local storage
+      const courseIDs = cartItems.map(item => item._id);
+      const total = cartItems.reduce((acc, item) => acc + item.course_price * item.quantity, 0);
+      localStorage.setItem('courseIDs', JSON.stringify(courseIDs));
+      localStorage.setItem('totalPrice', total);
+  
+      // Navigate to payments page
+      navigate('/payment');
+  
+      // Automatically refresh the page after a short delay (e.g., 500 milliseconds)
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } else {
-      alert('Cart is empty')
+      alert('Cart is empty');
     }
-  }
+  };
+  
+  
+
+
+
 
   // Calculate subtotal and shipping
   const subtotal = cartItems.reduce((acc, item) => acc + item.course_price * item.quantity, 0)
