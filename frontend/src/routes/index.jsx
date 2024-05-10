@@ -13,7 +13,7 @@ import InstructorUpdate from '../pages/instructorDash/UpdateInstructor'
 import InstructorCourses from '../pages/instructorDash/InstructorCourses'
 import EmpRegister from '../pages/register/empregister'
 import Emplogin from '../pages/login/emplogin'
-
+import Displayitems from '../pages/displayitems.jsx'
 import Addreview from '../pages/addreview'
 import Login from '../pages/login/loginselect'
 import Cuslogin from '../pages/login/cuslogin'
@@ -26,6 +26,7 @@ import CusDanger from '../pages/cusdash/cusdanger'
 import AdminDash from '../pages/admindash/dash'
 import AdminDashboard from '../pages/AdminDashboard'
 import MyProfile from '../pages/userProfile/MyProfile'
+import ItemDetails from '../components/items/coursePageCard.jsx'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -61,6 +62,7 @@ const AnimatedRoutes = () => {
         <Route path="/cusdash" element={<CusDash />} />
         <Route path="/cusdash/cusupdate/:id" element={<CusUpdate />} />
         <Route path="/cusdash/cusdanger" element={<CusDanger />} />
+        <Route path="/displayitems" element={<Displayitems />} />
 
         {/* Admin Dashboard */}
         <Route path="/admindash" element={<AdminDash />} />
