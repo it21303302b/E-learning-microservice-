@@ -114,31 +114,39 @@ const CourseDetails = () => {
 
   return (
     <div>
-      <Link to="/instructorDash">Back to Instructor Dashboard</Link> {/* Add Link to Instructor Dashboard */}
+      <Link to="/instructorDash">Back to Instructor Dashboard</Link> {/* Navigate back to Instructor Dashboard */}
       {courses.map((course, index) => (
         <div className="course_style" key={index}>
           {editingCourseId === course._id ? (
             <div>
+              <span>Course Name:</span>
               <input
                 type="text"
                 value={updatedCourseName}
                 onChange={(e) => setUpdatedCourseName(e.target.value)}
               />
+              <br />
+              <span>Course Description:</span>
               <input
                 type="text"
                 value={updatedCourseDescription}
                 onChange={(e) => setUpdatedCourseDescription(e.target.value)}
               />
+              <br />
+              <span>Lecture Notes:</span>
               <input
                 type="text"
                 value={updatedCourseLectureNotes}
                 onChange={(e) => setUpdatedCourseLectureNotes(e.target.value)}
               />
+              <br />
+              <span>Course Price:</span>
               <input
                 type="number"
                 value={updatedCoursePrice}
                 onChange={(e) => setUpdatedCoursePrice(e.target.value)}
               />
+              <br />
               <button onClick={() => handleUpdate(course._id)}>Update</button>
             </div>
           ) : (
@@ -160,6 +168,7 @@ const CourseDetails = () => {
       ))}
     </div>
   );
+  
 };
 
 export default CourseDetails;

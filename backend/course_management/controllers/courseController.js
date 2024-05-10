@@ -1,5 +1,7 @@
 const Course = require('../models/courseModel');
 const mongoose = require('mongoose');
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../utils/multer");
 
 // Get single course
 const getCourse = async (req, res) => {
@@ -30,24 +32,41 @@ const getAllCourses = async (req, res) => {
     }
 };
 
-// Create new course
 const createCourse = async (req, res) => {
     const { course_name, course_description, course_content, course_price, instructor_email, instructor_id } = req.body;
 
     try {
-        const course = await Course.create({ 
-            course_name, 
-            course_description, 
-            course_content, 
+        let courseData = {
+            course_name,
+            course_description,
+            course_content,
             course_price,
             instructor_email,
             instructor_id
-        });
+        };
+
+        if (req.files && req.files.image) {
+            // Upload image file to Cloudinary if it exists
+            const result = await cloudinary.uploader.upload(req.files.image[0].path);
+            courseData.course_img = result.secure_url;
+            courseData.cloudinary_img_id = result.public_id;
+        }
+        
+        if (req.files['zip']) {
+            // Upload zip file to Cloudinary if it exists
+            const zipResult = await cloudinary.uploader.upload(req.files['zip'][0].path, { resource_type: "auto" });
+            courseData.course_content.zip_url = zipResult.secure_url;
+            courseData.course_content.cloudinary_zip_id = zipResult.public_id;
+        }
+        
+
+        const course = await Course.create(courseData);
         res.status(201).json(course);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 };
+
 
 
 // Delete course

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom'; // Import Link
-import './CourseForm.css'; 
+import { Link } from 'react-router-dom';
+import './CourseForm.css';
 
 const CourseForm = () => {
   const [courseName, setCourseName] = useState('');
@@ -10,45 +10,61 @@ const CourseForm = () => {
   const [lectureNotes, setLectureNotes] = useState('');
   const [coursePrice, setCoursePrice] = useState('');
   const [instructorEmail, setInstructorEmail] = useState('');
+  const [zipFile, setZipFile] = useState(null); // State for zip file
+  const [imageFile, setImageFile] = useState(null); // State for image file
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
+    // Validation checks
+    if (!courseName || !courseDescription || !lectureNotes || !coursePrice || !instructorEmail || !zipFile || !imageFile) {
+      Swal.fire({
+        title: 'Validation Error',
+        text: 'Please fill in all fields and upload both the zip file and image.',
+        icon: 'error',
+      });
+      return;
+    }
+  
     const instructorId = localStorage.getItem('instructorID');
   
-    const course = {
-      course_name: courseName,
-      course_description: courseDescription,
-      course_content: {
-        lecture_notes: lectureNotes,
-      },
-      course_price: coursePrice,
-      instructor_email: instructorEmail, // Add instructor email
-      instructor_id: instructorId, // Add instructor ID from local storage
-    };
+    const formData = new FormData();
+    formData.append('course_name', courseName);
+    formData.append('course_description', courseDescription);
+    formData.append('course_content[lecture_notes]', lectureNotes);
+    formData.append('course_price', coursePrice);
+    formData.append('instructor_email', instructorEmail);
+    formData.append('instructor_id', instructorId);
+    formData.append('zip', zipFile); // Append zip file to form data
+    formData.append('image', imageFile); // Append image file to form data
   
     try {
-      await axios.post('http://localhost:4001/api/courses', course);
+      await axios.post('http://localhost:4001/api/courses', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       await Swal.fire({
         title: 'Success!',
         text: 'Course successfully added.',
         icon: 'success',
       });
-      // Redirect to DisplayCourses page after clicking OK
       window.location.href = '/displayCourses';
     } catch (err) {
-      alert('Error: Course not added');
       console.error(err);
-      setError('Error: Course not added');
+      Swal.fire({
+        title: 'Error',
+        text: 'Course not added. Please try again later.',
+        icon: 'error',
+      });
     }
   };
-  
   
 
   return (
     <div>
-      <Link to="/instructorDash">Back to Instructor Dashboard</Link> {/* Add Link to Instructor Dashboard */}
+      <Link to="/instructorDash">Back to Instructor Dashboard</Link>
       <form className="create" onSubmit={handleSubmit}>
         <h3>Add a New Course</h3>
 
@@ -86,11 +102,27 @@ const CourseForm = () => {
           required
         />
 
-        <label>Instructor Email:</label> {/* Add instructor email input field */}
+        <label>Instructor Email:</label>
         <input
           type="email"
           onChange={(e) => setInstructorEmail(e.target.value)}
           value={instructorEmail}
+          required
+        />
+
+        <label>Upload Zip File with course videos and pdfs(Mandatory):</label>
+        <input
+          type="file"
+          accept=".zip"
+          onChange={(e) => setZipFile(e.target.files[0])}
+          required
+        />
+
+        <label>Upload Course Picture:</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImageFile(e.target.files[0])}
           required
         />
 

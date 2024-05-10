@@ -1,3 +1,5 @@
+// courseModel.js
+
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -15,6 +17,14 @@ const courseSchema = new Schema({
         lecture_notes: {
             type: String,
             required: true
+        },
+        zip_url: {
+            type: String, // Store the Cloudinary URL for the zip file
+            required: true
+        },
+        cloudinary_zip_id: {
+            type: String, // Store the public ID for the zip file on Cloudinary
+            required: true
         }
     },
     course_price: {
@@ -29,7 +39,15 @@ const courseSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    }
+    },
+    course_img: {
+        type: String,
+        required: false
+      },
+      cloudinary_img_id: {
+        type: String,
+        required: false
+      }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Course', courseSchema);
