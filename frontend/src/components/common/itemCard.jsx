@@ -36,10 +36,10 @@ const ItemCard = (props) => {
   }
 
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap items-center">
       {courses.map((course, index) => (
         <div key={index} className="m-3">
-          <div className="w-72 flex flex-col overflow-hidden rounded-lg border bg-white shadow-md p-3">
+          <div className="w-72 flex flex-col overflow-hidden rounded-lg border bg-white shadow-md p-3 h-">
             <a className="flex w-full h-64 shadow-lg overflow-hidden rounded-xl" href="#">
               <img className="object-cover " src="https://lk.spaceylon.com/wp-content/uploads/2020/11/tt_vit_c_glow_all_day_protector_3.jpg" alt="course" />
             </a>
