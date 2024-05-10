@@ -4,22 +4,25 @@ import Home from '../pages/home.jsx'
 import NotFound from '../pages/404'
 import Cart from '../pages/cart'
 import Payment from '../pages/payment'
-import Additems from '../pages/additems'
-import Displayitems from '../pages/displayitems'
+
+// Malika's Routes
+import AddCourses from '../pages/AddCourses'
+import DisplayCourses from '../pages/DisplayCourses'
+import InstructorDash from '../pages/instructorDash/InstructorDash'
+import InstructorUpdate from '../pages/instructorDash/UpdateInstructor'
+import InstructorCourses from '../pages/instructorDash/InstructorCourses'
+import EmpRegister from '../pages/register/empregister'
+import Emplogin from '../pages/login/emplogin'
+
 import Addreview from '../pages/addreview'
 import Login from '../pages/login/loginselect'
 import Cuslogin from '../pages/login/cuslogin'
-import Emplogin from '../pages/login/emplogin'
 import Adminlogin from '../pages/login/adminlogin'
 import Register from '../pages/register/regselect'
 import CusRegister from '../pages/register/cusregister'
-import EmpRegister from '../pages/register/empregister'
 import CusDash from '../pages/cusdash/dash'
 import CusUpdate from '../pages/cusdash/cusupdate'
 import CusDanger from '../pages/cusdash/cusdanger'
-import EmpDash from '../pages/empdash/dash'
-import EmpUpdate from '../pages/empdash/empupdate'
-import EmpDanger from '../pages/empdash/empdanger'
 import AdminDash from '../pages/admindash/dash'
 import AdminDashboard from '../pages/AdminDashboard'
 import MyProfile from '../pages/userProfile/MyProfile'
@@ -35,10 +38,10 @@ const AnimatedRoutes = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/Payment" element={<Payment />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="/additems" element={<Additems />} />
-        <Route path="/displayitems" element={<Displayitems />} />
-        <Route path="/courseview" element={<CourseView />} />
-        <Route path="/addreview/:id" element={<Addreview />} />
+        <Route path="/AddCourses" element={<AddCourses />} /> 
+        <Route path="/DisplayCourses" element={<DisplayCourses />} /> 
+        <Route path="/addreview/:id" element={<Addreview />} /> 
+
 
         {/* Login Selection */}
         <Route path="/login" element={<Login />} />
@@ -56,14 +59,20 @@ const AnimatedRoutes = () => {
         <Route path="/empdash/empupdate/:id" element={<EmpUpdate />} />
         <Route path="/empdash/empdanger/:id" element={<EmpDanger />} />
 
-        {/* Customer Dashboard */}
-        <Route path="/cusdash" element={<CusDash />} />
-        <Route path="/cusdash/cusupdate/:id" element={<CusUpdate />} />
-        <Route path="/cusdash/cusdanger" element={<CusDanger />} />
+					{/* Instructor Dashboard */}
+					<Route path="/instructorDash" element={<InstructorDash />} />
+          <Route path="/instructorUpdate" element={<InstructorUpdate />} />
+          <Route path="/instructorCourses" element={<InstructorCourses />} />
+          
+					{/* Customer Dashboard */}
+					<Route path="/cusdash" element={<CusDash />} />
+					<Route path="/cusdash/cusupdate/:id" element={<CusUpdate />} />
+					<Route path="/cusdash/cusdanger" element={<CusDanger />} />
+          
+					{/* Admin Dashboard */}
+					<Route path="/admindash" element={<AdminDash />} />
+          <Route path='/admin' element={<AdminDashboard/>}/>
 
-        {/* Admin Dashboard */}
-        <Route path="/admindash" element={<AdminDash />} />
-        <Route path="/admin" element={<AdminDashboard />} />
 
         <Route path="/myprofile/:id" element={<MyProfile />} />
       </Routes>
