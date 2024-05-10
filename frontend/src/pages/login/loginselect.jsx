@@ -6,12 +6,11 @@ export default class Login extends Component {
   render() {
     return (
       <div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <div className="logincards">
-          <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 w-80 singlelogin">
+        <div className="w-full py-10 px-56 bg-blue-900">
+          <h1 className="text-white font-black text-center text-5xl">Select your Login</h1>
+        </div>
+        <div className="w-full flex lg:justify-evenly px-20">
+          <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 w-80">
             <Link to="/login/cuslogin">
               <img className="rounded-t-lg" src="https://i.ibb.co/fxf96pw/5127314.jpg" alt="" />
             </Link>
@@ -27,7 +26,7 @@ export default class Login extends Component {
               </Link>
             </div>
           </div>
-          <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 w-80 singlelogin">
+          <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 w-80">
             <Link to="/login/emplogin">
               <img className="rounded-t-lg" src="https://i.ibb.co/HYwKRhm/Group-of-professionals-analyzing-international-map.jpg" alt="" />
             </Link>
@@ -44,7 +43,7 @@ export default class Login extends Component {
             </div>
           </div>
 
-          <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 w-80 singlelogin">
+          <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 w-80 ">
             <Link to="/login/adminlogin">
               <img className="rounded-t-lg" src="https://i.ibb.co/KVdkRJH/20944989.jpg" alt="" />
             </Link>
