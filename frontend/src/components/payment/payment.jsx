@@ -6,12 +6,16 @@ function Payment() {
   const current = new Date()
 
   const [data, setData] = useState([])
+  const totalPrice = JSON.parse(localStorage.getItem('totalPrice')) || 0
+
   const [shippingAddress, setAddress] = useState('')
   const [cardNumber, setCardNumber] = useState('')
   const [cvcNumber, setCvcNumber] = useState('')
   const [expDate, setExpDate] = useState('')
   const [cardHolderName, setCardHolderName] = useState('')
+
   const [payMethod, setPayMethod] = useState('creditCard')
+
   const [email, setEmail] = useState('')
   const [purchasedItems, setPurchasedItems] = useState('')
   const [buyerId, setBuyerId] = useState('64639d4a4502095bc3368854')
@@ -31,12 +35,7 @@ function Payment() {
     setDeliveryOption(event.target.value)
   }
 
-  let deliveryFee = 0
-  if (deliveryOption === 'dhl') {
-    deliveryFee = 0.5
-  } else if (deliveryOption === 'fedex') {
-    deliveryFee = 0.6
-  }
+  const deliveryFee = 0 // Shipping fee removed
 
   const subtotal = data.reduce((accumulator, currentValue) => accumulator + currentValue.product_price * currentValue.quantity, 0)
   const shipping = subtotal * 1.5 * deliveryFee
@@ -60,43 +59,46 @@ function Payment() {
       shippingAddress,
       shippingMethod: deliveryOption,
       creditCard: creditCardData,
-      paymentMethod: payMethod,
+      paymentMethod: 'creditCard', // Set to credit card
       buyerEmail: email,
       purchasedItems: cartData,
+
     }
 
-    const newDelivery = {
-      buyerId,
-      orderedItems: cartData,
-      totalWeight,
-      deliveryService: deliveryOption,
-      deliveryAddress: shippingAddress,
-      deliveryDate,
-      deliveryFee: shipping,
-      deliveryStatus,
-    }
+    // const newDelivery = {
+    //   buyerId,
+    //   orderedItems: cartData,
+    //   totalWeight,
+    //   deliveryService: deliveryOption,
+    //   deliveryAddress: shippingAddress,
+    //   deliveryDate,
+    //   deliveryFee: shipping,
+    //   deliveryStatus,
+    // }
 
-    console.log(newDelivery)
+    // console.log(newDelivery)
 
-    axios
-      .post('http://localhost:8004/api/v1/deliveries', newDelivery)
-      .then(() => {
-        alert('Delivery added Successfull')
-        console.log(newDelivery)
-      })
-      .catch((err) => {
-        alert('Error: delivery not adeed')
-        console.log(err)
-      })
+    // axios
+    //   .post('http://localhost:8004/api/v1/deliveries', newDelivery)
+    //   .then(() => {
+    //     alert('Delivery added Successfully')
+    //     console.log(newDelivery)
+    //   })
+    //   .catch((err) => {
+    //     alert('Error: Delivery not added')
+    //     console.log(err)
+    //   })
+
 
     axios
       .post('http://localhost:8003/api/v1/payments', newPayment)
       .then(() => {
-        alert('Payment Successfull')
+        alert('Payment Successful')
         console.log(newPayment)
       })
       .catch((err) => {
-        alert('Error: payment not adeed')
+        alert('Error: Payment not added')
+
         console.log(err)
       })
   }
@@ -136,6 +138,7 @@ function Payment() {
                   type="button"
                   class="text-gray-900 bg-gray-100 hover:bg-gray-50 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-800 dark:bg-white dark:border-gray-700 dark:text-gray-900 dark:hover:bg-gray-200 me-2 mb-2"
                 >
+
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 me-2 -ms-1" viewBox="0 0 48 48">
                     <path
                       fill="#fbc02d"
@@ -148,6 +151,7 @@ function Payment() {
                   Checkout with Google Pay
                 </button>
               </div>
+              
               <div className="separator">
                 <hr className="line" />
                 <p>or pay using credit card</p>
@@ -174,7 +178,8 @@ function Payment() {
                     Card Holder's Name
                   </label>
                   <div>
-                    <input type="email" name="cdName" id="cdName" autoComplete="name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                    <input name="cdName" id="cdName" autoComplete="name" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+
                   </div>
                 </div>
 
@@ -227,6 +232,9 @@ function Payment() {
                     </div>
                   </div>
                 </div>
+
+                <p>Total Price: LKR {totalPrice}</p>
+
               </div>
               <button class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Checkout</button>
             </form>
