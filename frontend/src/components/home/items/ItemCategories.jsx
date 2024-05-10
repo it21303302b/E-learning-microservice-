@@ -1,5 +1,3 @@
-import Section from '../../common/section'
-
 import ItemSlider from './itemSlider'
 
 const ItemCategories = () => {
