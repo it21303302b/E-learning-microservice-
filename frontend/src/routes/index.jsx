@@ -26,7 +26,6 @@ import CusDanger from '../pages/cusdash/cusdanger'
 import AdminDash from '../pages/admindash/dash'
 import AdminDashboard from '../pages/AdminDashboard'
 import MyProfile from '../pages/userProfile/MyProfile'
-import CourseView from '../pages/courseView.jsx'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -38,10 +37,9 @@ const AnimatedRoutes = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/Payment" element={<Payment />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="/AddCourses" element={<AddCourses />} /> 
-        <Route path="/DisplayCourses" element={<DisplayCourses />} /> 
-        <Route path="/addreview/:id" element={<Addreview />} /> 
-
+        <Route path="/AddCourses" element={<AddCourses />} />
+        <Route path="/DisplayCourses" element={<DisplayCourses />} />
+        <Route path="/addreview/:id" element={<Addreview />} />
 
         {/* Login Selection */}
         <Route path="/login" element={<Login />} />
@@ -54,25 +52,19 @@ const AnimatedRoutes = () => {
         <Route path="/register/cusregister" element={<CusRegister />} />
         <Route path="/register/empregister" element={<EmpRegister />} />
 
-        {/* Seller Dashboard */}
-        <Route path="/empdash" element={<EmpDash />} />
-        <Route path="/empdash/empupdate/:id" element={<EmpUpdate />} />
-        <Route path="/empdash/empdanger/:id" element={<EmpDanger />} />
+        {/* Instructor Dashboard */}
+        <Route path="/instructorDash" element={<InstructorDash />} />
+        <Route path="/instructorUpdate" element={<InstructorUpdate />} />
+        <Route path="/instructorCourses" element={<InstructorCourses />} />
 
-					{/* Instructor Dashboard */}
-					<Route path="/instructorDash" element={<InstructorDash />} />
-          <Route path="/instructorUpdate" element={<InstructorUpdate />} />
-          <Route path="/instructorCourses" element={<InstructorCourses />} />
-          
-					{/* Customer Dashboard */}
-					<Route path="/cusdash" element={<CusDash />} />
-					<Route path="/cusdash/cusupdate/:id" element={<CusUpdate />} />
-					<Route path="/cusdash/cusdanger" element={<CusDanger />} />
-          
-					{/* Admin Dashboard */}
-					<Route path="/admindash" element={<AdminDash />} />
-          <Route path='/admin' element={<AdminDashboard/>}/>
+        {/* Customer Dashboard */}
+        <Route path="/cusdash" element={<CusDash />} />
+        <Route path="/cusdash/cusupdate/:id" element={<CusUpdate />} />
+        <Route path="/cusdash/cusdanger" element={<CusDanger />} />
 
+        {/* Admin Dashboard */}
+        <Route path="/admindash" element={<AdminDash />} />
+        <Route path="/admin" element={<AdminDashboard />} />
 
         <Route path="/myprofile/:id" element={<MyProfile />} />
       </Routes>
