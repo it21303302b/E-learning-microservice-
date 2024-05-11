@@ -48,7 +48,7 @@ const ItemCard = (props) => {
 
               <div>
                 <p>
-                  <span className="text-lg font-bold text-gray-900">${course.course_price}</span>
+                  <span className="text-lg font-bold text-gray-900">{course.course_price} LKR</span>
                 </p>
               </div>
               {!isAddedToCart(course) ? (
