@@ -36,6 +36,7 @@ const ItemDetails = () => {
           <div className="card" key={index}>
             <div className="card-content">
               <h2 className="course-name">{course.course_name}</h2>
+              <img className="course-image" src={course.course_img} alt={course.course_name} />
               <p className="course-description">{course.course_description}</p>
               <p className="course-price">${course.course_price}</p>
               <p className="enrollment-details">{course.enrollment_details}</p>
