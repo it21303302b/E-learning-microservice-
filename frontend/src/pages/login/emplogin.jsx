@@ -23,6 +23,7 @@ export default function InstructorLogin() {
       if (content.message === 'Logged in successfully.' && content.user.role === 'instructor') {
         localStorage.setItem('session', 'yes')
         localStorage.setItem('instructorID', content.user._id)
+        localStorage.setItem('userId', content.user._id)
         localStorage.setItem('instructorEmail', content.user.email)
         localStorage.setItem('authToken', content.token)
         localStorage.setItem('user', 'instructor')
