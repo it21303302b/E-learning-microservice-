@@ -59,6 +59,15 @@ const PurchasedCourses = () => {
     fetchUserPayments();
   }, [userId]);
 
+  const handleDownload = (zipUrl) => {
+    try {
+      console.log('Zip URL:', zipUrl);
+      window.open(zipUrl, '_blank'); // Open the link in a new tab/window
+    } catch (error) {
+      console.error('Error opening zip file:', error);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -80,6 +89,10 @@ const PurchasedCourses = () => {
                   <p>Price: ${course?.course_price}</p>
                   <p>Instructor Email: {course?.instructor_email}</p>
                   <img src={course?.course_img} alt={course?.course_name} />
+                  {/* Check if course_content exists before accessing zip_url */}
+                  {course?.course_content && (
+                    <button onClick={() => handleDownload(course?.course_content?.zip_url)}>Download</button>
+                  )}
                   {/* Render other course details as needed */}
                 </div>
               ))}
