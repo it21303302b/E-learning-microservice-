@@ -5,9 +5,7 @@ import Layout from '../components/layout'
 const AddCourses = () => {
   return (
     <div className="home">
-      <Layout>
-        <ItemForm />
-      </Layout>
+      <ItemForm />
     </div>
   )
 }
