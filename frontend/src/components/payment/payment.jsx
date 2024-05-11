@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import './payment.css';
 
 function Payment() {
+  const navigate = useNavigate(); // Get navigate function
+  
   const current = new Date();
 
   const [data, setData] = useState([]);
@@ -28,18 +31,18 @@ function Payment() {
 
   const handleCheckout = (event) => {
     event.preventDefault();
-
+  
     // Get form data
     const cardHolderEmail = document.getElementById('chEmail').value;
     const cardHolderName = document.getElementById('cdName').value;
     const cardNumber = document.getElementById('cdNumber').value;
     const expiryDate = document.getElementById('exDate').value;
     const cvv = document.getElementById('cvv').value;
-
+  
     // Get data from local storage
     const userId = localStorage.getItem('userId');
     const courseIds = JSON.parse(localStorage.getItem('courseIDs')); // Retrieve courseIds from local storage
-
+  
     // Create payment object
     const newPayment = {
       cardHolderEmail,
@@ -51,19 +54,28 @@ function Payment() {
       userId,
       totalAmount: totalPrice,
     };
-
+  
     // Send payment data to the backend
     axios
       .post('http://localhost:8003/api/payments/add', newPayment)
       .then(() => {
         alert('Payment Successful');
         console.log(newPayment);
+  
+        // Clear cart items from local storage after successful payment
+        localStorage.removeItem('myCart');
+        localStorage.removeItem('courseIDs');
+        localStorage.removeItem('totalPrice');
+        
+        // Redirect to course payment page after successful payment
+        navigate('/coursepurchases'); // Change '/coursepayment' to your desired route
       })
       .catch((err) => {
         alert('Error: Payment not added');
         console.log(err);
       });
   };
+  
 
   return (
     <>
