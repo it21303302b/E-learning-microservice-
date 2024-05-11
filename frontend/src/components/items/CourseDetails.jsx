@@ -115,7 +115,7 @@ const CourseDetails = () => {
   return (
     <div className="mx-24 my-5 grid md:grid-cols-2 sm:grid-cols-1 md:gap-3">
       {courses.map((course, index) => (
-        <div className="rounded-xl shadow-xl" key={index}>
+        <div className="rounded-xl shadow-xl border" key={index}>
           {editingCourseId === course._id ? (
             <div>
               <span>Course Image:</span>
@@ -154,7 +154,7 @@ const CourseDetails = () => {
                 <p className="text-4xl font-black text-red-700">{course.course_price}LKR</p>
 
                 <div className="flex justify-end my-1">
-                  <button onClick={() => handleEdit(course._id, course.course_name, course.course_description, course.course_content.lecture_notes, course.course_price)} className="bg-blue-900 p-3 mx-2 rounded-full">
+                  <button onClick={() => handleEdit(course._id, course.course_name, course.course_description, course.course_content.lecture_notes, course.course_price)} className="bg-blue-900 p-3 mx-2 rounded-full hover:bg-blue-800 hover:shadow-md">
                     <svg className="w-[24px] h-[24px] text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path
                         stroke="currentColor"
@@ -165,7 +165,7 @@ const CourseDetails = () => {
                       />
                     </svg>
                   </button>
-                  <button onClick={() => handleDelete(course._id)} className="bg-red-700 p-3 mx-2 rounded-full">
+                  <button onClick={() => handleDelete(course._id)} className="bg-red-700 p-3 mx-2 rounded-full hover:bg-red-600 hover:shadow-md">
                     <svg className="w-[24px] h-[24px] text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
                     </svg>
