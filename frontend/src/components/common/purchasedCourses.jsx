@@ -4,6 +4,7 @@ import axios from 'axios';
 const PurchasedCourses = () => {
   const [purchasedCourses, setPurchasedCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
   const userId = localStorage.getItem('userId'); // Get user ID from local storage
 
   useEffect(() => {
@@ -18,6 +19,12 @@ const PurchasedCourses = () => {
         console.log('Payments:', response.data.data);
 
         const payments = response?.data?.data || [];
+
+        if (payments.length === 0) {
+          setErrorMessage('No purchased courses found.');
+          setLoading(false);
+          return;
+        }
 
         const courses = [];
         for (const payment of payments) {
@@ -44,6 +51,8 @@ const PurchasedCourses = () => {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching user payments:', error);
+        setErrorMessage('No payments found for this user');
+        setLoading(false);
       }
     };
 
@@ -57,23 +66,27 @@ const PurchasedCourses = () => {
   return (
     <div>
       <h2>Purchased Courses</h2>
-      <div className="course-cards">
-        {purchasedCourses.map(({ _id, cardHolderName, courses }) => (
-          <div key={_id} className="payment-card">
-            <h3>Card Holder Name: {cardHolderName}</h3>
-            {courses.map(course => (
-              <div key={course?._id} className="course-card">
-                <h4>Course Name: {course?.course_name}</h4>
-                <p>Description: {course?.course_description}</p>
-                <p>Price: ${course?.course_price}</p>
-                <p>Instructor Email: {course?.instructor_email}</p>
-                <img src={course?.course_img} alt={course?.course_name} />
-                {/* Render other course details as needed */}
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
+      {errorMessage ? (
+        <div>{errorMessage}</div>
+      ) : (
+        <div className="course-cards">
+          {purchasedCourses.map(({ _id, cardHolderName, courses }) => (
+            <div key={_id} className="payment-card">
+              <h3>Card Holder Name: {cardHolderName}</h3>
+              {courses.map(course => (
+                <div key={course?._id} className="course-card">
+                  <h4>Course Name: {course?.course_name}</h4>
+                  <p>Description: {course?.course_description}</p>
+                  <p>Price: ${course?.course_price}</p>
+                  <p>Instructor Email: {course?.instructor_email}</p>
+                  <img src={course?.course_img} alt={course?.course_name} />
+                  {/* Render other course details as needed */}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
