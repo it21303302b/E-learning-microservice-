@@ -1,6 +1,5 @@
-
-import { useEffect, useState } from 'react'
 import ItemDetails from '../components/items/coursePageCard'
+
 import Navbar from '../components/layout/header/Navbar'
 
 const Displayitems = () =>{
@@ -12,7 +11,7 @@ const Displayitems = () =>{
 
         </div>
     )
+
 }
 
 export default Displayitems
-
