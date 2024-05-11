@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem } from '../../store/cartSlice';
@@ -38,9 +37,8 @@ const CartCard = () => {
 
 
 
-  // Calculate subtotal and shipping
+  // Calculate subtotal
   const subtotal = cartItems.reduce((acc, item) => acc + item.course_price * item.quantity, 0)
-  const shipping = subtotal > 100 ? subtotal * 0.05 : 0
 
   return (
     <div className="h-screen bg-gray-100 pt-10">
@@ -79,15 +77,11 @@ const CartCard = () => {
             <p className="text-gray-700">Subtotal</p>
             <p className="text-gray-700">LKR {subtotal}</p>
           </div>
-          <div className="flex justify-between">
-            <p className="text-gray-700">Savings</p>
-            <p className="text-gray-700">LKR {shipping}</p>
-          </div>
           <hr className="my-4" />
           <div className="flex justify-between">
             <p className="text-lg font-bold">Total</p>
             <div className="">
-              <p className="mb-1 text-lg font-bold">LKR {subtotal + shipping}</p>
+              <p className="mb-1 text-lg font-bold">LKR {subtotal}</p>
             </div>
           </div>
           <button onClick={handleClick} data-toggle="modal" data-target="#staticBackdrop" className="mt-6 w-full rounded-md bg-green-800 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
