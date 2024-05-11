@@ -1,14 +1,17 @@
 import ItemDetails from '../components/items/coursePageCard'
-import Layout from '../components/layout'
 
-const Displayitems = () => {
-  return (
-    <div className="home">
-      <Layout>
-        <ItemDetails />
-      </Layout>
-    </div>
-  )
+import Navbar from '../components/layout/header/Navbar'
+
+const Displayitems = () =>{
+    return(
+        <div className="home">
+           <Navbar />
+            <ItemDetails />
+                
+
+        </div>
+    )
+
 }
 
 export default Displayitems

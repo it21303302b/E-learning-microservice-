@@ -15,7 +15,7 @@ app.use(cors());
 //routes
 const paymentRoutes = require('./routes/payments');
 
-app.use('/api', paymentRoutes);
+app.use('/api/payments', paymentRoutes);
 
 //mongodb connection
 mongoose.set('strictQuery', false);
