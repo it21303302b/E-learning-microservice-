@@ -36,17 +36,16 @@ const ItemCard = (props) => {
   }
 
   return (
-    <div className="flex flex-wrap items-center">
+    <div className="grid md:grid-cols-4 items-center">
       {courses.map((course, index) => (
         <div key={index} className="m-3">
-          <div className="w-72 flex flex-col overflow-hidden rounded-lg border bg-white shadow-md p-3 h-">
-            <a className="flex w-full h-64 shadow-lg overflow-hidden rounded-xl" href="#">
-              <img className="object-cover " src="https://lk.spaceylon.com/wp-content/uploads/2020/11/tt_vit_c_glow_all_day_protector_3.jpg" alt="course" />
-            </a>
-            <div className="my-3">
-              <a href="#">
-                <h5 className="text-md tracking-tight text-blue-900">{course.course_name}</h5>
-              </a>
+          <div className="w-72 flex flex-col overflow-hidden rounded-t-lg border bg-white shadow-md">
+            <div className="flex w-full h-64 shadow-lg overflow-hidden">
+              <img className="object-cover " src={course.course_img} alt="course" />
+            </div>
+            <div className="m-5">
+              <h5 className="text-md tracking-tight text-blue-900">{course.course_name}</h5>
+
               <div>
                 <p>
                   <span className="text-lg font-bold text-gray-900">${course.course_price}</span>
