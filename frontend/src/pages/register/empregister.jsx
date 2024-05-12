@@ -70,8 +70,8 @@ export default function EmpRegister() {
   }
 
   return (
-    <div className="form-bg-img">
-      <div className="p-24">
+    <div className="flex justify-center form-bg-img">
+      <div className="px-32 py-24 lg:w-4/5 md:h-2/3 sm:w-full">
         <div className="text-3xl font-bold text-gray-900 text-center bg-white bg-opacity-80 py-5 rounded-lg shadow">
           <LogoText />
           <h1>Register as an Instructor</h1>

@@ -1,14 +1,14 @@
-import React from 'react';
-import Navbar from '../../components/layout/header/Navbar';
-import InstructorCourses from './InstructorCourses';
-import UpdateInstructor from './UpdateInstructor';
+import React from 'react'
+import InstructorCourses from './InstructorCourses'
+import DisplayCourses from '../DisplayCourses'
+import NavbarInstructor from '../../components/layout/header/NavbarInstructor'
 
 export default function InstructorDash() {
   return (
-    <>
-      <Navbar />
+    <div>
+      <NavbarInstructor />
       <InstructorCourses />
-      <UpdateInstructor />
-    </>
-  );
+      <DisplayCourses />
+    </div>
+  )
 }

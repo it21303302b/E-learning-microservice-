@@ -28,7 +28,7 @@ services:
     restart: always
 
   item-management-service:
-    build: ./item_management
+    build: ./course_management
     ports:
       - "4001:4001"
     depends_on:
