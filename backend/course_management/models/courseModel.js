@@ -43,11 +43,16 @@ const courseSchema = new Schema({
     course_img: {
         type: String,
         required: false
-      },
-      cloudinary_img_id: {
+    },
+    cloudinary_img_id: {
         type: String,
         required: false
-      }
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'accept', 'decline'],
+        default: 'pending'
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Course', courseSchema);
