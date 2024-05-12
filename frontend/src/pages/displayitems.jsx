@@ -1,19 +1,17 @@
-
-import { useEffect, useState } from 'react'
 import ItemDetails from '../components/items/coursePageCard'
-import ItemForm from '../components/items/ItemForm'
-import Layout from '../components/layout'
 
-const Displayitems = () =>{
-    return(
-        <div className="home">
-            <Layout>
-            <ItemDetails/>
-            </Layout>
+import Navbar from '../components/layout/header/Navbar'
 
-        </div>
-    )
+const Displayitems = () => {
+  return (
+    <div>
+      <Navbar />
+      <div className="m-5 bg-blue-900 py-10 mx-10 text-white text-4xl font-black text-center rounded-xl">
+        <h1>All Courses</h1>
+      </div>
+      <ItemDetails />
+    </div>
+  )
 }
 
 export default Displayitems
-

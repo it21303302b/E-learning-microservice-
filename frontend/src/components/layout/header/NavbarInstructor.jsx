@@ -7,19 +7,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const navigation = [
-  { name: 'Home', to: '/', current: true },
-  { name: 'Courses', to: '/displayitems', current: false },
-  { name: 'Cart', to: '/cart', current: false },
-  { name: 'Purchases', to: '/coursepurchases', current: false }, // New item
-  // { name: 'Login', to: '/login', current: false },
-  // { name: 'Register', to: '/register', current: false },
+  { name: 'My Courses', to: '/instructorDash', current: true },
+  { name: 'Add Course', to: '/addCourses', current: false },
 ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Navbar() {
+export default function NavbarInstructor() {
   const navigate = useNavigate()
   const userId = localStorage.getItem('userId')
   useEffect(() => {
