@@ -28,6 +28,7 @@ import AdminDashboard from '../pages/AdminDashboard'
 import MyProfile from '../pages/userProfile/MyProfile'
 import ItemDetails from '../components/items/coursePageCard.jsx'
 import CoursePurchases from '../pages/coursePurchases.jsx'
+import CourseApprovalList from '../pages/admindash/CourseApprovalList.jsx'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -68,6 +69,7 @@ const AnimatedRoutes = () => {
 
         {/* Admin Dashboard */}
         <Route path="/admindash" element={<AdminDash />} />
+        <Route path="/courseapprove" element={<CourseApprovalList />} />
         <Route path="/admin" element={<AdminDashboard />} />
 
         <Route path="/myprofile/:id" element={<MyProfile />} />
