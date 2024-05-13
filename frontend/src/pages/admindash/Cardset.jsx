@@ -2,7 +2,6 @@
 import React from 'react'
 import './index.css'
 import { Link } from 'react-router-dom'
-import NavbarAdmin from '../../components/layout/header/NavbarAdmin'
 
 export default function Cardset() {
   const goto = 'See more'
