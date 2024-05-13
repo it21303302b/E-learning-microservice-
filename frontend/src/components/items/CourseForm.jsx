@@ -15,7 +15,7 @@ const CourseForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
+  
     // Validation checks
     if (!courseName || !courseDescription || !lectureNotes || !coursePrice || !instructorEmail || !zipFile || !imageFile) {
       Swal.fire({
@@ -25,9 +25,55 @@ const CourseForm = () => {
       })
       return
     }
-
+  
+    if (courseName.length < 3 || courseName.length > 100) {
+      Swal.fire({
+        title: 'Validation Error',
+        text: 'Course name should be between 3 and 100 characters long.',
+        icon: 'error',
+      })
+      return
+    }
+  
+    if (courseDescription.length < 10 || courseDescription.length > 500) {
+      Swal.fire({
+        title: 'Validation Error',
+        text: 'Course description should be between 10 and 500 characters long.',
+        icon: 'error',
+      })
+      return
+    }
+  
+    if (lectureNotes.length < 10 || lectureNotes.length > 1000) {
+      Swal.fire({
+        title: 'Validation Error',
+        text: 'Lecture notes should be between 10 and 1000 characters long.',
+        icon: 'error',
+      })
+      return
+    }
+  
+    if (isNaN(coursePrice) || coursePrice <= 0) {
+      Swal.fire({
+        title: 'Validation Error',
+        text: 'Course price should be a valid positive number.',
+        icon: 'error',
+      })
+      return
+    }
+  
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(instructorEmail)) {
+      Swal.fire({
+        title: 'Validation Error',
+        text: 'Please enter a valid email address.',
+        icon: 'error',
+      })
+      return
+    }
+  
     const instructorId = localStorage.getItem('instructorID')
-
+  
     const formData = new FormData()
     formData.append('course_name', courseName)
     formData.append('course_description', courseDescription)
@@ -37,7 +83,7 @@ const CourseForm = () => {
     formData.append('instructor_id', instructorId)
     formData.append('zip', zipFile) // Append zip file to form data
     formData.append('image', imageFile) // Append image file to form data
-
+  
     try {
       await axios.post('http://localhost:4001/api/courses', formData, {
         headers: {
@@ -59,6 +105,7 @@ const CourseForm = () => {
       })
     }
   }
+  
 
   return (
     <div className="form-bg-img h-screen">
@@ -101,7 +148,7 @@ const CourseForm = () => {
                 </div>
                 <div className="mb-2">
                   <label htmlFor="cNotes" className="block text-sm font-medium text-gray-900 dark:text-white">
-                    Lecture Notes:
+                    Lecture Notes (About the uploaded files content):
                   </label>
                   <input
                     id="cNotes"
@@ -114,7 +161,7 @@ const CourseForm = () => {
                 </div>
                 <div className="mb-2">
                   <label htmlFor="cPrice" className="block text-sm font-medium text-gray-900 dark:text-white">
-                    Course Price:
+                    Course Price (LKR):
                   </label>
                   <input
                     id="cPrice"
