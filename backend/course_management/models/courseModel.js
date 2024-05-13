@@ -1,5 +1,3 @@
-// courseModel.js
-
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -19,11 +17,11 @@ const courseSchema = new Schema({
             required: true
         },
         zip_url: {
-            type: String, // Store the Cloudinary URL for the zip file
+            type: String, // Save the Cloudinary URL for the zip file
             required: true
         },
         cloudinary_zip_id: {
-            type: String, // Store the public ID for the zip file on Cloudinary
+            type: String, // Save the public ID for the zip file on Cloudinary
             required: true
         }
     },
@@ -41,11 +39,11 @@ const courseSchema = new Schema({
         required: true
     },
     course_img: {
-        type: String,
+        type: String,  // Save the Cloudinary URL for the image file
         required: false
     },
     cloudinary_img_id: {
-        type: String,
+        type: String,  // Save the public ID for the image file on Cloudinary
         required: false
     },
     status: {
