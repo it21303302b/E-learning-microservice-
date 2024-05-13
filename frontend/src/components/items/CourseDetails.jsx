@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom' // Import Link
 import './CourseDetails.css'
 import axios from 'axios'
 import Swal from 'sweetalert2'
@@ -117,24 +116,51 @@ const CourseDetails = () => {
       {courses.map((course, index) => (
         <div className="rounded-xl shadow-xl border" key={index}>
           {editingCourseId === course._id ? (
-            <div>
-              <span>Course Image:</span>
-              <img src={course.course_img} alt="CourseImg" className="w-1/4" />
-              <br />
-              <span>Course Name:</span>
-              <input type="text" value={updatedCourseName} onChange={(e) => setUpdatedCourseName(e.target.value)} />
-              <br />
-              <span>Course Description:</span>
-              <input type="text" value={updatedCourseDescription} onChange={(e) => setUpdatedCourseDescription(e.target.value)} />
-              <br />
-              <span>Lecture Notes:</span>
-              <input type="text" value={updatedCourseLectureNotes} onChange={(e) => setUpdatedCourseLectureNotes(e.target.value)} />
-              <br />
-              <span>Course Price:</span>
-              <input type="number" value={updatedCoursePrice} onChange={(e) => setUpdatedCoursePrice(e.target.value)} />
-              <br />
-              <button onClick={() => handleUpdate(course._id)}>Update</button>
-              <button onClick={handleCancel}>Cancel</button>
+            <div className="p-5 w-full">
+              <p className="text-center text-lg font-semibold italic">Edit Course Details</p>
+              <Divider />
+              <p className="mt-3 block text-sm font-medium text-gray-900 dark:text-white">Course Name</p>
+              <input
+                type="text"
+                value={updatedCourseName}
+                className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={(e) => setUpdatedCourseName(e.target.value)}
+              />
+
+              <p className="mt-3 block text-sm font-medium text-gray-900 dark:text-white">Course Description:</p>
+              <input
+                type="text"
+                value={updatedCourseDescription}
+                className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={(e) => setUpdatedCourseDescription(e.target.value)}
+              />
+
+              <p className="mt-3 block text-sm font-medium text-gray-900 dark:text-white">Lecture Notes:</p>
+              <input
+                type="text"
+                value={updatedCourseLectureNotes}
+                className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={(e) => setUpdatedCourseLectureNotes(e.target.value)}
+              />
+              <p className="mt-3 block text-sm font-medium text-gray-900 dark:text-white">Course Price:</p>
+              <input
+                type="number"
+                value={updatedCoursePrice}
+                className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={(e) => setUpdatedCoursePrice(e.target.value)}
+              />
+              <div className="my-3 text-center">
+                <button className="p-3 m-2 rounded-full bg-green-500 hover:bg-green-400 hover:shadow-md hover:shadow-green-300" onClick={() => handleUpdate(course._id)}>
+                  <svg className="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11.917 9.724 16.5 19 7.5" />
+                  </svg>
+                </button>
+                <button className="p-3 m-2 rounded-full bg-blue-400 hover:bg-blue-300 hover:shadow-md hover:shadow-blue-200" onClick={handleCancel}>
+                  <svg className="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                  </svg>
+                </button>
+              </div>
             </div>
           ) : (
             <div className=" w-full h-72 flex rounded-xl overflow-hidden hover:bg-gray-100 duration-500">
