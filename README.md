@@ -1,37 +1,51 @@
-# Distributed Systems Project for Year 3 Semester 1
+# E-learning Microservices Project (Distributed Systems Project for Year 3 Semester 2)
 
-## Group Memebers
+## Group Members
 
-* 
++ IT21250156 - Withanagamage J.C
++ IT21277122 - Degaldoruwa D.W.S.S.W.M.R.M.B.B
++ IT21303302 - Weerakoon W.M.B.B
 
 ## Technologies Used
 
-+ Frontend - Vite.js
-+ Backend - Express.js, Node.js
++ Frontend - [Vite.js](https://vitejs.dev/)
++ Backend - [Express.js](https://expressjs.com/), [Node.js](https://nodejs.org/)
 + Database - MongoDB
 + Containerization - Docker
 + Message Broker - RabbitMQ
 + End Point Testing - Postman
 
-## About the LankaHerbals
+## About Coursemate
 
-Lanka Herbals is an Online e-commerce platform that we created where individual sellers can sell their herbal products for customers via a online platform. We used the Microservices software architecture for this project.There are 8 backend microservices,
-+ Authentication Service - This service provides authentication for buyers, sellers, and admin. It will also provide an API for user registration and login.
-+ Cart Service - This service provides an API for buyers to add and remove items from the shopping cart.
-+ delivery Service - This service provides an API for buyers to select delivery oprions, and for a third-party delivery service to process the request.
-+ Item Management Service - This service provides an API for sellers to add and update items.It will also provide an API for admin to delete items.
-+ Order Management Service - This service provide an API for buyers to place orders and for admin to confirm orders. It will also provide an Api for tracking the status of orders.
-+ Payment Service - This service provides an API for buyers to make payments using credit cards or payment intergration services.
-+ Ratings and Reviews Service - This service will provide an API for buyers to select delivery options, and for a third party delivery service to process the request.
-+ User Profile Service - This service provides an API for users to update their profiles, including their personal information, address, phone number, etc.
+Coursemate is an e-learning platform designed to facilitate instructors and learners in the management and consumption of educational courses. Employing microservices architecture, the platform offers various services tailored to specific functionalities.
 
-Addditionaly We developed a Gateway service to separate the external public APIs from internal microservice APIs, allowing for microservices to be added and boundaries changed.
+There are 5 backend microservices:
+
++ Authentication Service - This service provides authentication for instructors, learners, and admin. It also includes APIs for user registration and login.
++ Cart Service - This service enables learners to manage their shopping cart by adding and removing courses.
++ Payment Service - Facilitates learners in making payments using credit cards or payment integration services.
++ Course Management Service - Allows instructors to manage courses by providing APIs for adding and updating courses. Admins can also delete courses and update course status.
++ Gateway Service - Separates external public APIs from internal microservice APIs, allowing for flexibility in adding microservices and adjusting boundaries.
+
+### GitHub Repository
+
+[Coursemate GitHub Repository](https://github.com/it21303302b/E-learning-microservice-)
+
+### Project Description
+
+Coursemate is an innovative e-learning platform aimed at revolutionizing the way instructors and learners interact with educational content. With its microservices architecture, Coursemate offers unparalleled flexibility and scalability, ensuring seamless performance even under heavy loads.
+
+Instructors can effortlessly create and manage courses using the Course Management Service, while learners can explore a wide range of courses and add them to their carts with the Cart Service. The Authentication Service ensures secure access for all users, while the Payment Service simplifies the process of making transactions.
+
+One of Coursemate's standout features is its Gateway Service, which acts as a centralized entry point for all external and internal APIs. This allows for easy integration of new microservices and dynamic adjustment of service boundaries, making Coursemate adaptable to evolving requirements.
+
+Whether you're an instructor looking to share your expertise or a learner eager to expand your knowledge, Coursemate provides a user-friendly and efficient platform for all your e-learning needs.
 
 ### Build
 
-Instructions to build all the apps and packages will be on:
+Refer to the following instructions for building all the apps and packages:
+
 [Build Instructions for Backend Microservices](/backend/readme.md)
 
-
-![lanka_herbals](https://github.com/IT21064418/Y3.S1.WE.SE.01.01_CSSE_21/assets/87406509/f3be4642-4d7c-4792-8920-49e47510adb6)
-
+![Coursemate](https://github.com/it21303302b/E-learning-microservice-/assets/coursemate_screenshot.jpg)
+ 
