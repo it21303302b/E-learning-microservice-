@@ -1,21 +1,34 @@
 const Payment = require('../model/paymentModel');
 const mongoose = require('mongoose');
+const axios = require('axios');
 
 // Create a new payment
 exports.createPayment = async (req, res) => {
   try {
-    const { cardHolderEmail, cardHolderName, courseIds, userId } = req.body;
+    const { cardHolderEmail, cardHolderName, courseIds, userId, totalAmount } = req.body;
 
     // Create a new payment
     const payment = new Payment({
       cardHolderEmail,
       cardHolderName,
       courseIds,
-      userId
+      userId,
+      totalAmount
     });
 
     // Save the payment to the database
     await payment.save();
+
+    // Send email notification
+    try {
+      await axios.post('http://localhost:8003/api/send-email', {
+        to: cardHolderEmail,
+        subject: 'Purchase Successful',
+        body: `Dear ${cardHolderName},\n\nYour purchase was successful.\n\nTotal Amount: ${totalAmount} LKR\n\nThank you for your purchase.`,
+      });
+    } catch (error) {
+      console.error('Error sending email notification:', error);
+    }
 
     res.status(201).json({ success: true, data: payment });
   } catch (err) {
@@ -103,4 +116,3 @@ exports.getUserPayments = async (req, res) => {
     res.status(500).json({ success: false, error: 'Server Error' });
   }
 };
-

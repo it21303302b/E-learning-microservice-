@@ -30,6 +30,9 @@ const CartCard = () => {
     } else {
       alert('Cart is empty')
     }
+
+    // Clear cart items from local storage when user clicks "OK"
+    localStorage.removeItem('myCart');
   }
 
   // Calculate subtotal
