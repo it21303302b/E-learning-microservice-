@@ -3,6 +3,9 @@ import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import LogoText from '../../components/common/LogoText'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 
 export default function InstructorLogin() {
   const [email, setEmail] = React.useState('')
@@ -46,16 +49,13 @@ export default function InstructorLogin() {
       }
     } catch (error) {
       console.log('Error: ', error)
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong. Please try again later.',
-      })
+      toast.error('Wrong Password or Email! Try again')
     }
   }
 
   return (
     <div className="form-bg-img h-screen">
+      <ToastContainer />
       <div className="flex justify-center py-32">
         <div className="p-5 flex flex-col items-center justify-center border shadow-lgp-10 rounded-2xl dark:bg-gray-900 bg-white shadow-lg md:w-1/3 sm:w-full">
           <LogoText />
