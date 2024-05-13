@@ -14,15 +14,15 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// RabbitMQ server
+// RabbitMQ server Connection
 amqpServer.connect().then(() => {
     amqpServer.consumefromQueue(); 
 });
 
-// Routes
-app.use('/api/courses', courseManagement); // Updated route for course management
+// Route for course management
+app.use('/api/courses', courseManagement); 
 
-// Connect to MongoDB
+// Connection to MongoDB
 mongoose.connect(config.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true

@@ -32,6 +32,7 @@ const getAllCourses = async (req, res) => {
     }
 };
 
+//Create a course
 const createCourse = async (req, res) => {
     const { course_name, course_description, course_content, course_price, instructor_email, instructor_id } = req.body;
 
@@ -46,14 +47,14 @@ const createCourse = async (req, res) => {
         };
 
         if (req.files && req.files.image) {
-            // Upload image file to Cloudinary if it exists
+            // Upload image file to Cloudinary
             const result = await cloudinary.uploader.upload(req.files.image[0].path);
             courseData.course_img = result.secure_url;
             courseData.cloudinary_img_id = result.public_id;
         }
         
         if (req.files['zip']) {
-            // Upload zip file to Cloudinary if it exists
+            // Upload zip file to Cloudinary
             const zipResult = await cloudinary.uploader.upload(req.files['zip'][0].path, { resource_type: "auto" });
             courseData.course_content.zip_url = zipResult.secure_url;
             courseData.course_content.cloudinary_zip_id = zipResult.public_id;
