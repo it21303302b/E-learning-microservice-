@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './payment.css';
+import Swal from 'sweetalert2';
 
 function Payment() {
   const navigate = useNavigate();
@@ -23,6 +24,46 @@ function Payment() {
     const cardNumber = document.getElementById('cdNumber').value;
     const expiryDate = document.getElementById('exDate').value;
     const cvv = document.getElementById('cvv').value;
+
+    // Simple form validation
+    if (!cardHolderEmail || !cardHolderName || !cardNumber || !expiryDate || !cvv) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'All fields are required.',
+      });
+      return;
+    }
+
+    // Validate card number format (simple check for 16 digits)
+    if (!/^\d{16}$/.test(cardNumber)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Please enter a valid card number (16 digits).',
+      });
+      return;
+    }
+
+    // Validate expiry date format (simple check for MM/DD format)
+    if (!/^\d{2}\/\d{2}$/.test(expiryDate)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Please enter a valid expiry date (MM/DD format).',
+      });
+      return;
+    }
+
+    // Validate CVV format (simple check for 3 digits)
+    if (!/^\d{3}$/.test(cvv)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Please enter a valid CVV (3 digits).',
+      });
+      return;
+    }
 
     // Get data from local storage
     const userId = localStorage.getItem('userId');
@@ -52,34 +93,48 @@ function Payment() {
             body: `Dear ${cardHolderName},\n\nYour purchase was successful.\n\nTotal Amount: ${totalPrice} LKR\n\nThank you for your purchase.`,
           })
           .then(() => {
-            alert('Payment Successful');
-            console.log(newPayment);
+            Swal.fire({
+              icon: 'success',
+              title: 'Payment Successful',
+              text: 'Your payment was successful!',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // Clear cart items from local storage after successful payment
+                localStorage.removeItem('myCart');
+                localStorage.removeItem('courseIDs');
+                localStorage.removeItem('totalPrice');
 
-            // Clear cart items from local storage after successful payment
-            localStorage.removeItem('myCart');
-            localStorage.removeItem('courseIDs');
-            localStorage.removeItem('totalPrice');
-
-            // Redirect to course payment page after successful payment
-            navigate('/coursepurchases');
+                // Redirect to course payment page after successful payment
+                navigate('/coursepurchases');
+              }
+            });
           })
           .catch((error) => {
             console.error('Error sending email:', error);
-            alert('Payment Successful, but failed to send email notification');
-            console.log(newPayment);
+            Swal.fire({
+              icon: 'success',
+              title: 'Payment Successful, but failed to send email notification',
+              text: 'Your payment was successful, but there was an issue sending the email notification.',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // Clear cart items from local storage after successful payment
+                localStorage.removeItem('myCart');
+                localStorage.removeItem('courseIDs');
+                localStorage.removeItem('totalPrice');
 
-            // Clear cart items from local storage after successful payment
-            localStorage.removeItem('myCart');
-            localStorage.removeItem('courseIDs');
-            localStorage.removeItem('totalPrice');
-
-            // Redirect to course payment page after successful payment
-            navigate('/coursepurchases');
+                // Redirect to course payment page after successful payment
+                navigate('/coursepurchases');
+              }
+            });
           });
       })
       .catch((err) => {
-        alert('Error: Payment not added');
-        console.log(err);
+        console.error('Error adding payment:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Payment Error',
+          text: 'There was an error processing your payment. Please try again later.',
+        });
       });
   };
 
