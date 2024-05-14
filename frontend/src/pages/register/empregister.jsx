@@ -4,6 +4,8 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
 import LogoText from '../../components/common/LogoText'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function EmpRegister() {
   const navigate = useNavigate()
@@ -30,6 +32,19 @@ export default function EmpRegister() {
     // Check if passwords match
     if (password !== confirmPassword) {
       setIsErr('Passwords do not match')
+      toast.warning('Passwords do not match')
+      return
+    }
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      toast.error('Invalid email address')
+      return
+    }
+
+    // Validate password
+    if (password.length < 6) {
+      toast.error('Password must be at least 6 characters long')
       return
     }
 
@@ -71,6 +86,7 @@ export default function EmpRegister() {
 
   return (
     <div className="flex justify-center form-bg-img">
+      <ToastContainer />
       <div className="px-32 py-24 lg:w-4/5 md:h-2/3 sm:w-full">
         <div className="text-3xl font-bold text-gray-900 text-center bg-white bg-opacity-80 py-5 rounded-lg shadow">
           <LogoText />
