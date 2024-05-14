@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v1.0
 kind: Service
 metadata:
   name: course-management-service
