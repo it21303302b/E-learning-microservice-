@@ -4,6 +4,9 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 import { useUser } from '../../context/UserContext'
 import LogoText from '../../components/common/LogoText'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 
 export default function Cuslogin() {
   const { setCurrentUser } = useUser()
@@ -47,16 +50,13 @@ export default function Cuslogin() {
       }
     } catch (error) {
       console.error('Login Error:', error)
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong. Please try again later!',
-      })
+      toast.error('Wrong Password or Email! Try again')
     }
   }
 
   return (
     <div className="form-bg-img h-screen">
+      <ToastContainer />
       <div className="flex justify-center py-32">
         <div className="p-5 flex flex-col items-center justify-center border shadow-lgp-10 rounded-2xl dark:bg-gray-900 bg-white shadow-lg md:w-1/3 sm:w-full">
           <LogoText />
@@ -96,7 +96,7 @@ export default function Cuslogin() {
               <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                 Login
               </button>
-              <p className="text-sm font-light text-center text-gray-500 dark:text-gray-400 dark:text-black">
+              <p className="text-sm font-light text-center text-gray-500">
                 Don’t have an account yet?{' '}
                 <Link to="/register" className="text-blue-900 font-black hover:underline dark:text-primary-500">
                   Sign up

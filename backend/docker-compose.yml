@@ -1,29 +1,25 @@
-version: '3.8'
+version: 'v1.0'
 services:
   gateway-service:
-    image: bweera/gatewayservice
-    # Add any additional configuration here
+    image: bweera/gatewayservice:v1.0
     ports:
       - "8000:8000"
     restart: always
 
-  auth-serviceelr:
-    image: bweera/authserviceelr
-    # Add any additional configuration here
+  auth-service:
+    image: bweera/authserviceelr:v1.0
     ports:
       - "8070:8070"
     restart: always
 
-  course-management-service:
-    image: bweera/coursemanagementservice
-    # Add any additional configuration here
+  course_management-service:
+    image: bweera/coursemanagementservice:v1.0
     ports:
       - "4001:4001"
     restart: always
 
   payment-service:
-    image: bweera/paymentservice
-    # Add any additional configuration here
+    image: bweera/paymentservice:v1.0
     ports:
       - "8003:8003"
     restart: always
