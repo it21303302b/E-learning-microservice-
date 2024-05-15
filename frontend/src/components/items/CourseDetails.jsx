@@ -9,7 +9,6 @@ const CourseDetails = () => {
   const [editingCourseId, setEditingCourseId] = useState(null)
   const [updatedCourseName, setUpdatedCourseName] = useState('')
   const [updatedCourseDescription, setUpdatedCourseDescription] = useState('')
-  const [updatedCourseLectureNotes, setUpdatedCourseLectureNotes] = useState('')
   const [updatedCoursePrice, setUpdatedCoursePrice] = useState('')
 
   useEffect(() => {
@@ -25,11 +24,10 @@ const CourseDetails = () => {
       })
   }, [])
 
-  const handleEdit = (courseId, courseName, courseDescription, lectureNotes, coursePrice) => {
+  const handleEdit = (courseId, courseName, courseDescription, coursePrice) => {
     setEditingCourseId(courseId)
     setUpdatedCourseName(courseName)
     setUpdatedCourseDescription(courseDescription)
-    setUpdatedCourseLectureNotes(lectureNotes)
     setUpdatedCoursePrice(coursePrice)
   }
 
@@ -53,9 +51,6 @@ const CourseDetails = () => {
       await axios.patch(`http://localhost:4001/api/courses/${courseId}`, {
         course_name: updatedCourseName,
         course_description: updatedCourseDescription,
-        course_content: {
-          lecture_notes: updatedCourseLectureNotes,
-        },
         course_price: updatedCoursePrice,
       })
       // Refresh courses after update
@@ -107,7 +102,6 @@ const CourseDetails = () => {
     // Reset updated course data
     setUpdatedCourseName('')
     setUpdatedCourseDescription('')
-    setUpdatedCourseLectureNotes('')
     setUpdatedCoursePrice('')
   }
 
@@ -135,13 +129,6 @@ const CourseDetails = () => {
                 onChange={(e) => setUpdatedCourseDescription(e.target.value)}
               />
 
-              <p className="mt-3 block text-sm font-medium text-gray-900 dark:text-white">Lecture Notes:</p>
-              <input
-                type="text"
-                value={updatedCourseLectureNotes}
-                className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                onChange={(e) => setUpdatedCourseLectureNotes(e.target.value)}
-              />
               <p className="mt-3 block text-sm font-medium text-gray-900 dark:text-white">Course Price:</p>
               <input
                 type="number"
@@ -180,7 +167,7 @@ const CourseDetails = () => {
                 <p className="text-4xl font-black text-red-700">{course.course_price}LKR</p>
 
                 <div className="flex justify-end my-1">
-                  <button onClick={() => handleEdit(course._id, course.course_name, course.course_description, course.course_content.lecture_notes, course.course_price)} className="bg-blue-900 p-3 mx-2 rounded-full hover:bg-blue-800 hover:shadow-md">
+                  <button onClick={() => handleEdit(course._id, course.course_name, course.course_description, course.course_price)} className="bg-blue-900 p-3 mx-2 rounded-full hover:bg-blue-800 hover:shadow-md">
                     <svg className="w-[24px] h-[24px] text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path
                         stroke="currentColor"

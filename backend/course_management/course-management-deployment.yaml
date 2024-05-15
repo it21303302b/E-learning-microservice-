@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: course-management-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: course-management
+  template:
+    metadata:
+      labels:
+        app: course-management
+    spec:
+      containers:
+      - name: course-management
+        image: bweera/coursemanagementservice:v1.0
+        ports:
+        - containerPort: 4001
