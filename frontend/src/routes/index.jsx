@@ -1,7 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Home from '../pages/home.jsx'
-import NotFound from '../pages/404'
+
 import Cart from '../pages/cart'
 import Payment from '../pages/payment'
 
@@ -14,7 +14,6 @@ import InstructorCourses from '../pages/instructorDash/InstructorCourses'
 import EmpRegister from '../pages/register/empregister'
 import Emplogin from '../pages/login/emplogin'
 import Displayitems from '../pages/displayitems.jsx'
-import Addreview from '../pages/addreview'
 import Login from '../pages/login/loginselect'
 import Cuslogin from '../pages/login/cuslogin'
 import Adminlogin from '../pages/login/adminlogin'
@@ -39,10 +38,8 @@ const AnimatedRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/Payment" element={<Payment />} />
-        <Route path="*" element={<NotFound />} />
         <Route path="/AddCourses" element={<AddCourses />} />
         <Route path="/DisplayCourses" element={<DisplayCourses />} />
-        <Route path="/addreview/:id" element={<Addreview />} />
 
         {/* Login Selection */}
         <Route path="/login" element={<Login />} />

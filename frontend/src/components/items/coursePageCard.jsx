@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import './ItemDetails.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItem } from '../../store/cartSlice';
-import axios from 'axios';
-import { Button, Divider } from '../common';
+import React, { useEffect, useState } from 'react'
+import './ItemDetails.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { addItem } from '../../store/cartSlice'
+import axios from 'axios'
+import { Button, Divider } from '../common'
 
 const ItemDetails = () => {
-  const [courses, setCourses] = useState([]);
-  const [purchasedCourses, setPurchasedCourses] = useState([]);
-  const cartItems = useSelector((state) => state.cart.items); // Retrieve cart items from Redux store
-  const dispatch = useDispatch();
+  const [courses, setCourses] = useState([])
+  const [purchasedCourses, setPurchasedCourses] = useState([])
+  const cartItems = useSelector((state) => state.cart.items) // Retrieve cart items from Redux store
+  const dispatch = useDispatch()
 
   useEffect(() => {
     axios
       .get('http://localhost:4001/api/courses')
       .then((res) => {
-        setCourses(res.data.map(course => ({ ...course, addedToCart: false }))); // Initialize addedToCart to false for each course
+        setCourses(res.data.map((course) => ({ ...course, addedToCart: false }))) // Initialize addedToCart to false for each course
       })
       .catch((err) => {
-        alert(err.message);
-      });
+        alert(err.message)
+      })
 
     axios
       .get(`http://localhost:8003/api/payments/user/${localStorage.getItem('userId')}/payments`, {
@@ -28,32 +28,32 @@ const ItemDetails = () => {
         },
       })
       .then((res) => {
-        const payments = res.data.data || [];
-        const purchasedCourses = payments.flatMap((payment) => payment.courseIds);
-        setPurchasedCourses(purchasedCourses);
+        const payments = res.data.data || []
+        const purchasedCourses = payments.flatMap((payment) => payment.courseIds)
+        setPurchasedCourses(purchasedCourses)
       })
       .catch((err) => {
-        console.error('Error fetching purchased courses:', err);
-      });
-  }, []);
+        console.error('Error fetching purchased courses:', err)
+      })
+  }, [])
 
   const handleAddToCart = (course) => {
-    dispatch(addItem(course));
-  };
+    dispatch(addItem(course))
+  }
 
   const isAddedToCart = (course) => {
-    return cartItems.some((item) => item._id === course._id);
-  };
+    return cartItems.some((item) => item._id === course._id)
+  }
 
   const isAlreadyPurchased = (course) => {
-    return purchasedCourses.includes(course._id);
-  };
+    return purchasedCourses.includes(course._id)
+  }
 
   return (
     <div>
       <div className="grid md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 px-10 mb-10">
         {courses.map((course, index) => (
-          <div className="md:w-full h-56 flex overflow-hidden border shadow-lg rounded-xl hover:bg-gray-100 hover:shadow-lg hover:shadow-blue-700" key={index}>
+          <div className="md:w-full h-56 flex overflow-hidden border shadow-lg rounded-xl bg-white hover:bg-gray-100 hover:shadow-lg hover:shadow-blue-700" key={index}>
             <div className="md:w-2/5 object-cover">
               <img className="h-full w-full object-cover" src={course.course_img} alt={course.course_name} />
             </div>
@@ -73,7 +73,9 @@ const ItemDetails = () => {
                 ) : (
                   <Button
                     onClick={() => handleAddToCart(course)}
-                    className={`text-white ${isAddedToCart(course) ? 'bg-gray-400' : 'bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800'} font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-full`}
+                    className={`text-white ${
+                      isAddedToCart(course) ? 'bg-gray-400' : 'bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800'
+                    } font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-full`}
                     disabled={isAddedToCart(course)}
                   >
                     <svg className="mr-2 w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -88,7 +90,7 @@ const ItemDetails = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ItemDetails;
+export default ItemDetails

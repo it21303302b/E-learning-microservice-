@@ -38,7 +38,7 @@ export default function EmpRegister() {
     // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
-      toast.error('Invalid email address')
+      toast.error('Please entar a valid email address')
       return
     }
 
@@ -78,6 +78,11 @@ export default function EmpRegister() {
         })
         .catch((err) => {
           console.log(err)
+          if (err.response && err.response.data && err.response.data.message) {
+            toast.error(err.response.data.message)
+          } else {
+            toast.error('Failed to register. Please try again.')
+          }
         })
     } catch (err) {
       console.log(err)

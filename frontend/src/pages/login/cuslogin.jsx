@@ -16,6 +16,15 @@ export default function Cuslogin() {
   async function cusLogin(event) {
     event.preventDefault()
 
+    // Email validation regex pattern
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!emailPattern.test(email)) {
+      // Display error toast if email format is incorrect
+      toast.error('Please enter a valid email address')
+      return
+    }
+
     const User = {
       email: email,
       password,
