@@ -116,7 +116,7 @@ const PurchasedCourses = () => {
                         <span className="absolute left-1/2 transform -translate-x-1/2 bottom-14 bg-gray-700 text-white text-xs rounded-md py-1 px-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Download the course files</span>
                       </button>
                     )}
-                    {/* Render other course details as needed */}
+                    
                   </div>
                 </div>
               ))}

@@ -10,17 +10,17 @@ exports.sendEmail = async (req, res) => {
     // Create SMTP transporter
     const transporter = nodemailer.createTransport({
         host: 'smtp.elasticemail.com',
-        port: 2525,
+        port: 8003,
         secure: true, // Set to true if using SSL/TLS
         auth: {
-          user: 'gamermelt94@gmail.com',
+          user: 'coursemate01@gmail.com',
           pass: 'AB11408803446F9CFD5CB6003581D5789467',
       },
     });
 
     // Define email options
     const mailOptions = {
-      from: 'gamermelt94@gmail.com',
+      from: 'coursemate01@gmail.com',
       to,
       subject,
       text: body,
