@@ -103,7 +103,7 @@ const PurchasedCourses = () => {
                         </svg>
                       </button>
                     )}
-                    {/* Render other course details as needed */}
+                    
                   </div>
                 </div>
               ))}

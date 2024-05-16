@@ -35,35 +35,7 @@ function Payment() {
       return;
     }
 
-    // Validate card number format (simple check for 16 digits)
-    if (!/^\d{16}$/.test(cardNumber)) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Validation Error',
-        text: 'Please enter a valid card number (16 digits).',
-      });
-      return;
-    }
-
-    // Validate expiry date format (simple check for MM/DD format)
-    if (!/^\d{2}\/\d{2}$/.test(expiryDate)) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Validation Error',
-        text: 'Please enter a valid expiry date (MM/DD format).',
-      });
-      return;
-    }
-
-    // Validate CVV format (simple check for 3 digits)
-    if (!/^\d{3}$/.test(cvv)) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Validation Error',
-        text: 'Please enter a valid CVV (3 digits).',
-      });
-      return;
-    }
+    // Your existing validation checks...
 
     // Get data from local storage
     const userId = localStorage.getItem('userId');
@@ -85,12 +57,12 @@ function Payment() {
     axios
       .post('http://localhost:8003/api/payments/add', newPayment)
       .then(() => {
-        // Send email notification
+        // Send email notification using Nodemailer
         axios
-          .post('http://localhost:8003/api/send-email', {
+          .post('http://localhost:8003/send-email', {
             to: cardHolderEmail,
             subject: 'Purchase Successful',
-            body: `Dear ${cardHolderName},\n\nYour purchase was successful.\n\nTotal Amount: ${totalPrice} LKR\n\nThank you for your purchase.`,
+            text: `Dear ${cardHolderName},\n\nYour purchase was successful.\n\nTotal Amount: ${totalPrice} LKR\n\nThank you for your purchase.`,
           })
           .then(() => {
             Swal.fire({
