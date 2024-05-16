@@ -1,5 +1,6 @@
 import { Swiper } from 'swiper/react'
 import ItemCard from '../../common/itemCard'
+import { ReactTyped } from 'react-typed'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -41,7 +42,10 @@ const ItemSlider = (props) => {
     })
   }, [])
   return (
-    <div className="mx-6 mt-10 relative">
+    <div className="form-bg-img px-10 py-5">
+      <p className="text-blue-900 font-black text-start text-2xl">
+        Latest Releases <ReactTyped strings={['>>>']} typeSpeed={120} backSpeed={100} loop />
+      </p>
       <Swiper ref={sliderRef} spaceBetween={30} slidesPerView={4} onSwiper={handleSwiper}>
         <ItemCard />
       </Swiper>

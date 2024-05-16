@@ -3,6 +3,9 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import LogoText from '../../components/common/LogoText'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('')
@@ -10,6 +13,15 @@ export default function AdminLogin() {
 
   async function adminLogin(event) {
     event.preventDefault()
+
+    // Email validation regex pattern
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!emailPattern.test(email)) {
+      // Display error toast if email format is incorrect
+      toast.error('Please enter a valid email address')
+      return
+    }
 
     const user = {
       email: email,
@@ -57,6 +69,7 @@ export default function AdminLogin() {
 
   return (
     <div className="form-bg-img h-screen">
+      <ToastContainer />
       <div className="flex justify-center py-32">
         <div className="p-5 flex flex-col items-center justify-center border shadow-lgp-10 rounded-2xl dark:bg-gray-900 bg-white shadow-lg md:w-1/3 sm:w-full">
           <LogoText />

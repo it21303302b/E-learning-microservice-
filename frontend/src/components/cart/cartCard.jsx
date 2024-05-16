@@ -32,14 +32,14 @@ const CartCard = () => {
     }
 
     // Clear cart items from local storage when user clicks "OK"
-    localStorage.removeItem('myCart');
+    localStorage.removeItem('myCart')
   }
 
   // Calculate subtotal
   const subtotal = cartItems.reduce((acc, item) => acc + item.course_price * item.quantity, 0)
 
   return (
-    <div className="h-screen form-bg-img p-10">
+    <div className="p-10">
       <div className="bg-blue-900 py-10 mx-10 text-white text-4xl font-black text-center rounded-xl ">
         <h1>My Cart</h1>
       </div>

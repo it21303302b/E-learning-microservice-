@@ -14,6 +14,15 @@ export default function InstructorLogin() {
   async function instructorLogin(event) {
     event.preventDefault()
 
+    // Email validation regex pattern
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!emailPattern.test(email)) {
+      // Display error toast if email format is incorrect
+      toast.error('Please enter a valid email address')
+      return
+    }
+
     const user = {
       email: email,
       password,

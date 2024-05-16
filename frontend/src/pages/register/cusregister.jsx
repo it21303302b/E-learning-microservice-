@@ -4,6 +4,8 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
 import LogoText from '../../components/common/LogoText'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function CusRegister() {
   const navigate = useNavigate()
@@ -30,6 +32,20 @@ export default function CusRegister() {
     // Check if passwords match
     if (password !== confirmPassword) {
       setIsErr('Passwords do not match')
+      toast.warning('Passwords do not match')
+      return
+    }
+
+    //validate email
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailPattern.test(email)) {
+      toast.error('Please entar a valid email address')
+      return
+    }
+
+    // validate password
+    if (password.length < 6) {
+      toast.error('Password must be at least 6 characters long')
       return
     }
 
@@ -62,6 +78,11 @@ export default function CusRegister() {
         })
         .catch((err) => {
           console.log(err)
+          if (err.response && err.response.data && err.response.data.message) {
+            toast.error(err.response.data.message)
+          } else {
+            toast.error('Failed to register. Please try again.')
+          }
         })
     } catch (err) {
       console.log(err)
@@ -70,6 +91,7 @@ export default function CusRegister() {
 
   return (
     <div className="flex justify-center form-bg-img">
+      <ToastContainer />
       <div className="px-32 py-24 lg:w-4/5 md:h-2/3 sm:w-full">
         <div className="text-3xl font-bold text-gray-900 text-center bg-white bg-opacity-80 py-5 rounded-lg shadow">
           <LogoText />
