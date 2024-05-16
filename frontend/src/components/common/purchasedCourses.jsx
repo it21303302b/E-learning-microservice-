@@ -127,7 +127,7 @@ const PurchasedCourses = () => {
                         </span>
                       </button>
                     )}
-                    {/* Render other course details as needed */}
+                    
                   </div>
                 </div>
               ))}
