@@ -8,12 +8,12 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 
-export default function Cuslogin() {
+export default function LearnerLogin() {
   const { setCurrentUser } = useUser()
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
 
-  async function cusLogin(event) {
+  async function learnLogin(event) {
     event.preventDefault()
 
     // Email validation regex pattern
@@ -73,7 +73,7 @@ export default function Cuslogin() {
             <p>Login as a Learner</p>
           </div>
           <div className="py-3 border-t-2 md:w-2/3 sm:w-full">
-            <form className="space-y-4 md:space-y-6" onSubmit={cusLogin} autoComplete="off">
+            <form className="space-y-4 md:space-y-6" onSubmit={learnLogin} autoComplete="off">
               <div>
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Email
