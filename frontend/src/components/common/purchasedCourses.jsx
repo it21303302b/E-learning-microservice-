@@ -96,7 +96,7 @@ const PurchasedCourses = () => {
           {purchasedCourses.map(({ _id, cardHolderName, courses }) => (
             <div key={_id} className="rounded-2xl">
               {courses.map((course) => (
-                <div key={course?._id} className="mb-3 flex md:w-full md:h-52 rounded-2xl shadow-lg border overflow-hidden">
+                <div key={course?._id} className="mb-3 flex md:w-full md:h-52 rounded-2xl shadow-lg border overflow-hidden bg-white">
                   <img src={course?.course_img} alt={course?.course_name} className="md:w-1/5 object-cover rounded-l-2xl border-r shadow-lg shadow-blue-400" />
                   <div className="md:w-3/5 p-5">
                     <h4 className="text-center text-blue-900 font-semibold">{course?.course_name}</h4>
@@ -116,7 +116,6 @@ const PurchasedCourses = () => {
                         <span className="absolute left-1/2 transform -translate-x-1/2 bottom-14 bg-gray-700 text-white text-xs rounded-md py-1 px-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Download the course files</span>
                       </button>
                     )}
-                    
                   </div>
                 </div>
               ))}

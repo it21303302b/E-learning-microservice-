@@ -74,7 +74,7 @@ export default function CusRegister() {
           })
 
           // to login page
-          navigate('/login/cuslogin')
+          navigate('/login/learnerlogin')
         })
         .catch((err) => {
           console.log(err)

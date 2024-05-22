@@ -15,7 +15,6 @@ import EmpRegister from '../pages/register/empregister'
 import Emplogin from '../pages/login/emplogin'
 import Displayitems from '../pages/displayitems.jsx'
 import Login from '../pages/login/loginselect'
-import Cuslogin from '../pages/login/cuslogin'
 import Adminlogin from '../pages/login/adminlogin'
 import Register from '../pages/register/regselect'
 import CusRegister from '../pages/register/cusregister'
@@ -28,6 +27,7 @@ import MyProfile from '../pages/userProfile/MyProfile'
 import ItemDetails from '../components/items/coursePageCard.jsx'
 import CoursePurchases from '../pages/coursePurchases.jsx'
 import CourseApprovalList from '../pages/admindash/CourseApprovalList.jsx'
+import LearnerLogin from '../pages/login/LearnerLogin.jsx'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -43,7 +43,7 @@ const AnimatedRoutes = () => {
 
         {/* Login Selection */}
         <Route path="/login" element={<Login />} />
-        <Route path="/login/cuslogin" element={<Cuslogin />} />
+        <Route path="/login/learnerlogin" element={<LearnerLogin />} />
         <Route path="/login/emplogin" element={<Emplogin />} />
         <Route path="/login/adminlogin" element={<Adminlogin />} />
 
